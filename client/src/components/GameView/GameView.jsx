@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-const socket = io('http://localhost:5000')
+const socket = io('http://localhost:5000');
 
 export default class Game extends Component {
     constructor(props) {
@@ -35,8 +35,11 @@ export default class Game extends Component {
     render() {
        const {counter} = this.state
        const {timer} = this.state
+       const {onViewChanged} = this.props
        return (
        <div>
+       <h1>Game</h1>
+       <button type="button" onClick={onViewChanged}>Change View</button>
         <h1>Count: {counter}</h1>
         <button type="button" onClick={this.addRandom}>Add Something!</button>
         <h1>Time: {timer}s</h1>
