@@ -4,11 +4,11 @@ import { Button } from '@material-ui/core';
 
 export default class GameStatus extends Component {
   render() {
-      const {onViewChanged} = this.props
+    const {onViewChanged} = this.props
     return (
       <div>
         <h1>Game</h1>
-        <Button variant="contained" color="primary" onClick={onViewChanged}>Leave Game</Button>
+        <Button variant="outlined" color="primary" onClick={onViewChanged}>Leave Game</Button>
       </div>
     )
   }

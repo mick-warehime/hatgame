@@ -40,9 +40,9 @@ export default class GameBoard extends Component {
     return (
       <div>
         <h1>Count: {counter}</h1>
-        <Button variant="contained" color="secondary" onClick={this.addRandom}>Add Something!</Button>
+        <Button variant="outlined" color="secondary" onClick={this.addRandom}>Add Something!</Button>
         <h1>Time: {timer}s</h1>
-        <Button variant="contained" color="secondary" onClick={this.startTimer}>Toggle Timer</Button>
+        <Button variant="outlined" color="secondary" onClick={this.startTimer}>Toggle Timer</Button>
       </div>
     )
   }
