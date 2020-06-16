@@ -1,5 +1,5 @@
-import React, { Component, } from 'react';
-import { Views, } from '../../utils/constants';
+import React, { Component } from 'react';
+import { Views } from '../../utils/constants';
 import LobbyView from '../LobbyView/LobbyView';
 import GameView from '../GameView/GameView';
 
