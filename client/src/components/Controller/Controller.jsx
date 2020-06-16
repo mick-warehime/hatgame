@@ -3,6 +3,14 @@ import { Views } from '../../utils/constants';
 import LobbyView from '../LobbyView/LobbyView';
 import GameView from '../GameView/GameView';
 
+// The socket controls all the interactions with the backend.
+// To 'call' the backend
+// socket.emit('foo', request, (response) => {callback(response)}
+
+// To listen to message from the backend
+// socket.on('bar', (response) => {callback(response})
+import io from 'socket.io-client';
+const socket = io('http://localhost:5000');
 
 export default class Controller extends Component {
     constructor(props) {
@@ -24,9 +32,9 @@ export default class Controller extends Component {
        const { view } = this.state;
        switch (view) {
       case Views.LOBBY:
-        return <LobbyView onViewChanged={this.onViewChanged}/>;
+        return <LobbyView onViewChanged={this.onViewChanged} socket={socket}/>;
       case Views.GAME:
-        return  <GameView onViewChanged={this.onViewChanged}/>;
+        return  <GameView onViewChanged={this.onViewChanged} socket={socket}/>;
       default:
        return (
        <div>

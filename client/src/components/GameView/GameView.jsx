@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
-const socket = io('http://localhost:5000');
 
 export default class Game extends Component {
     constructor(props) {
       super(props);
-      // intialize this.state.counter = 0
       this.state = { counter: 0, timer: 0 };
       this.addRandom = this.addRandom.bind(this);
       this.startTimer = this.startTimer.bind(this);
@@ -13,7 +10,7 @@ export default class Game extends Component {
     }
 
     componentDidMount () {
-        // bind the incrementTimer message to the incrementTimer method
+        const {socket} = this.props
         socket.on('increment_timer', this.incrementTimer)
      }
 
@@ -23,11 +20,14 @@ export default class Game extends Component {
     }
 
     startTimer() {
-        socket.emit("toggle_timer");
+        const {socket} = this.props
+        socket.emit("start_timer", {'duration': 5});
     }
 
     addRandom() {
+        const {socket} = this.props
         const {counter} = this.state
+
         socket.emit("add_random", {'value':counter}, resp => this.setState({ counter: resp.value }) );
     }
 

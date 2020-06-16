@@ -24,13 +24,15 @@ def add_random(request):
     return response
 
 
-@socketio.on("toggle_timer", namespace='/')
-def toggle_timer():
-    timer()
+@socketio.on("start_timer", namespace='/')
+def toggle_timer(request):
+    timer(request['duration'])
 
 
-def timer():
-    while True:
+def timer(duration):
+    count = 0
+    while count < duration:
         time.sleep(1)
         emit('increment_timer')
         logging.info('increment timer')
+        count += 1
