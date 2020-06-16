@@ -1,5 +1,6 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 
 export default class LobbyView extends Component {
 
@@ -8,7 +9,7 @@ export default class LobbyView extends Component {
     return (
       <div>
         <h1>Lobby</h1>
-        <button type="button" onClick={onViewChanged}>Change View</button>
+        <Button color="primary" variant="contained" onClick={onViewChanged}>Join Game</Button>
       </div>
     )
   }
