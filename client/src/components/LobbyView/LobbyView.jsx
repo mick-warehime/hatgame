@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
-import io from 'socket.io-client';
-const socket = io('http://localhost:5000');
+import React, { Component, } from 'react';
+import PropTypes from 'prop-types';
 
-export default class Lobby extends Component {
+export default class LobbyView extends Component {
 
-    render() {
-       const {onViewChanged} = this.props
-       return (
-       <div>
-       <h1>Lobby</h1>
-       <button type="button" onClick={onViewChanged}>Change View</button>
-        </div>
-       )
-    }
+  render() {
+    const {onViewChanged} = this.props
+    return (
+      <div>
+        <h1>Lobby</h1>
+        <button type="button" onClick={onViewChanged}>Change View</button>
+      </div>
+    )
+  }
+}
+
+LobbyView.propTypes = {
+  onViewChanged: PropTypes.func,
 }
