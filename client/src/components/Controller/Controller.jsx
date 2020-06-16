@@ -13,34 +13,34 @@ import io from 'socket.io-client';
 const socket = io('http://localhost:5000');
 
 export default class Controller extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {view: Views.LOBBY}
-      this.onViewChanged = this.onViewChanged.bind(this)
-    }
+  constructor(props) {
+    super(props);
+    this.state = {view: Views.LOBBY}
+    this.onViewChanged = this.onViewChanged.bind(this)
+  }
 
-    onViewChanged() {
-        const {view} = this.state
-        var newView = Views.LOBBY
-        if (view == Views.LOBBY){
-            newView = Views.GAME
-            }
-        this.setState({view: newView})
+  onViewChanged() {
+    const {view} = this.state
+    var newView = Views.LOBBY
+    if (view == Views.LOBBY){
+      newView = Views.GAME
     }
+    this.setState({view: newView})
+  }
 
-    render() {
-       const { view } = this.state;
-       switch (view) {
-      case Views.LOBBY:
-        return <LobbyView onViewChanged={this.onViewChanged} socket={socket}/>;
-      case Views.GAME:
-        return  <GameView onViewChanged={this.onViewChanged} socket={socket}/>;
-      default:
-       return (
-       <div>
-        <h1>Sorry not implemented</h1>
+  render() {
+    const {view} = this.state;
+    switch (view) {
+    case Views.LOBBY:
+      return <LobbyView onViewChanged={this.onViewChanged}/>;
+    case Views.GAME:
+      return  <GameView onViewChanged={this.onViewChanged} socket={socket}/>;
+    default:
+      return (
+        <div>
+          <h1>Sorry not implemented</h1>
         </div>
-       )
-        }
+      )
     }
+  }
 }

@@ -45,6 +45,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material/layout-grid": "^6.0.0",
     "axios": "^0.19.2",
     "http": "0.0.1-security",
     "jsdom": "^16.2.2",
