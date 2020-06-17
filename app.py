@@ -26,6 +26,7 @@ def add_random(request):
 
 @socketio.on("start_timer", namespace='/')
 def toggle_timer(request):
+    update(score=1)
     timer(request['duration'])
 
 
@@ -36,3 +37,20 @@ def timer(duration):
         emit('increment_timer')
         logging.info('increment timer')
         count += 1
+
+
+@socketio.on("get_status", namespace='/')
+def get_status():
+    update()
+
+
+def update(score=0):
+    logging.info('GOT STATUS')
+    response = {"team1": ["chad", "bardasd", "thad"],
+                "icon1": "fas fa-hat-wizard fa",
+                "score1": score,
+                "team2": ["brew", "drew", "agnew", "stu"],
+                "icon2": "fas fa-hat-wizard fa",
+                "score2": 0}
+    logging.info(response)
+    emit('update_status', response)

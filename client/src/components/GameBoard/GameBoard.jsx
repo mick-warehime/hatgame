@@ -22,7 +22,7 @@ export default class GameBoard extends Component {
   }
 
   startTimer() {
-    const {socket,} = this.props
+    const {socket} = this.props
     socket.emit("start_timer", {'duration': 5});
   }
 

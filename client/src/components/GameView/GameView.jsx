@@ -14,7 +14,7 @@ export default class GameView extends Component {
     return (
       <div className="game">
         <div className="left-panel">
-          <GameStatus onViewChanged={onViewChanged}/>
+          <GameStatus onViewChanged={onViewChanged} socket={socket}/>
         </div>
         <div className="right-panel">
           <GameBoard  socket={socket}/>
