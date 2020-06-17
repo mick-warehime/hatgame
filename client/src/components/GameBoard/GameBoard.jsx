@@ -30,7 +30,7 @@ export default class GameBoard extends Component {
       return  <PhraseView boardViewChanged={this.boardViewChanged} socket={socket}/>;
     case Views.SUMMARY:
       return  <SummaryView boardViewChanged={this.boardViewChanged} socket={socket}/>;
-      case Views.TEST:
+    case Views.TEST:
       return  <TestView boardViewChanged={this.boardViewChanged} socket={socket}/>;
     default:
       return (
