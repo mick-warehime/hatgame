@@ -14,6 +14,7 @@
 
 .right-panel {
   min-height: 600px;
-  min-width: 800px;
+  min-width: 600px;
   border:1px solid red;
+  float: left;
 }
