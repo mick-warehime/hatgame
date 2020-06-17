@@ -6,7 +6,6 @@ import { Input } from '@material-ui/core';
 import { InputLabel } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Icon } from '@material-ui/core';
-import './LobbyView.css';
 
 export default class LobbyView extends Component {
   constructor(props) {
@@ -18,10 +17,8 @@ export default class LobbyView extends Component {
   }
 
   onSubmit(){
-    const {name, room} = this.state;
+    //     const {name, room} = this.state;
     const {onViewChanged} = this.props
-    console.log("name" + name)
-    console.log("room" + room)
     onViewChanged()
   }
 
@@ -63,8 +60,8 @@ export default class LobbyView extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={3}>
-            <Button color="primary" variant="contained" onClick={this.onSubmit}>Join</Button>
-            <Button color="primary" variant="contained" onClick={this.onSubmit}>Create</Button>
+            <Button color="primary" onClick={this.onSubmit}>Join</Button>
+            <Button color="primary" onClick={this.onSubmit}>Create</Button>
           </Grid>
         </Grid>
       </div>
