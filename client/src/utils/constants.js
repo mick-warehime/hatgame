@@ -4,7 +4,8 @@ const Views = Object.freeze({
   PHRASE: 'Enter Phrases',
   AUDIENCE: 'Audience',
   ACTIVE_PLAYER: 'Active Player',
-  TEST: 'TEST',
+  SUMMARY: 'Summary',
+  TEST: 'Test',
 });
 
 exports.Views = Views;
