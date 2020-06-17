@@ -59,6 +59,9 @@ export default class GameStatus extends Component {
           <Grid item xs={12}>
             <Button color="primary" onClick={onViewChanged}>Leave</Button>
           </Grid>
+          <Grid item xs={12}>
+            <Button color="primary" variant="contained">Start</Button>
+          </Grid>
         </Grid>
       </div>
     )
