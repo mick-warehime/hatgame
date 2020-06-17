@@ -4,6 +4,7 @@ import { Views } from '../../utils/constants';
 import AudienceView from '../AudienceView/AudienceView';
 import ActivePlayerView from '../ActivePlayerView/ActivePlayerView';
 import PhraseView from '../PhraseView/PhraseView';
+import SummaryView from '../SummaryView/SummaryView';
 import TestView from '../TestView/TestView';
 
 export default class GameBoard extends Component {
@@ -27,7 +28,9 @@ export default class GameBoard extends Component {
       return  <AudienceView boardViewChanged={this.boardViewChanged} socket={socket}/>;
     case Views.PHRASE:
       return  <PhraseView boardViewChanged={this.boardViewChanged} socket={socket}/>;
-    case Views.TEST:
+    case Views.SUMMARY:
+      return  <SummaryView boardViewChanged={this.boardViewChanged} socket={socket}/>;
+      case Views.TEST:
       return  <TestView boardViewChanged={this.boardViewChanged} socket={socket}/>;
     default:
       return (

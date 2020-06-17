@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import { Views } from '../../utils/constants';
 
-export default class PhraseView extends Component {
+export default class SummaryView extends Component {
   constructor(props) {
     super(props);
     //
@@ -17,13 +17,13 @@ export default class PhraseView extends Component {
     const {boardViewChanged} = this.props;
     return (
       <div>
-        <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.SUMMARY)}>SUMMARY</Button>
+        <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.AUDIENCE)}>AUDIENCE</Button>
       </div>
     )
   }
 }
 
-PhraseView.propTypes = {
+SummaryView.propTypes = {
   socket: PropTypes.any,
   boardViewChanged: PropTypes.func,
 }
