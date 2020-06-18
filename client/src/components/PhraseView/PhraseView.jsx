@@ -64,12 +64,12 @@ export default class PhraseView extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={3}>
-            <Button variant="contained" color="primary" onClick={this.onSubmit}>
-              <FontAwesomeIcon icon={['fas' , 'paper-plane']} size="2x"/>
-            </Button>
+        <Button variant="contained" color="primary" onClick={() => boardViewChanged(Views.SUMMARY)}>
+        <FontAwesomeIcon icon={['fas' , 'paper-plane']} size="2x"/>
+        </Button>
+
           </Grid>
         </Grid>
-        <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.SUMMARY)}>SUMMARY</Button>
       </div>
     )
   }

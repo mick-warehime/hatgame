@@ -30,6 +30,8 @@ export default class AudienceView extends Component {
         >
           <Grid item xs={6}>
             <Typography color="primary" style={{ fontSize: 25 }}>{message}</Typography>
+            <Typography color="primary" style={{ fontSize: 25 }}>or</Typography>
+            <Typography color="primary" style={{ fontSize: 45 }}>43 s</Typography>
           </Grid>
         </Grid>
         <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.ACTIVE_PLAYER)}>ACTIVE_PLAYER</Button>
