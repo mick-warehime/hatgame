@@ -4,4 +4,5 @@ ICONS = ['bowling-ball', 'trash', 'crow', 'anchor', 'atom', 'baby', 'bath',
          'horse-head', 'ice-cream', 'infinity', 'life-ring', 'lightbulb', 'magic', 'palette', 'pastafarianism',
          'pepper-hot', 'people-carry', 'poop', 'radiation', 'recycle', 'rocket', 'running', 'shower', 'skull',
          'skull-crossbones', 'smoking', 'socks', 'spider', 'syringe', 'thumbtack', 'toilet-paper', 'yin-yang', 'tooth',
-         'sad-cry', 'pray', 'prescription-bottle', 'egg', 'kiwi-bird', 'hot-tub', 'wind']
+         'sad-cry', 'pray', 'bezier-curve', 'prescription-bottle', 'egg', 'kiwi-bird', 'hot-tub', 'wind', 'cat',
+         'carrot', 'bong', 'american-sign-language-interpreting']
