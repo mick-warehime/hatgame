@@ -5,14 +5,14 @@ import { Grid } from '@material-ui/core';
 import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
-import { Icon } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class GameStatus extends Component {
   constructor(props) {
     super(props);
-    this.state = { team1: [], score1: 0, icon1: "fas fa-hat-wizard fa",
-      team2: [], score2: 0, icon2: "fas fa-hat-wizard fa"};
+    this.state = { team1: [], score1: 0, icon1: "hat-wizard",
+      team2: [], score2: 0, icon2: "hat-wizard"};
     this.teamList = this.teamList.bind(this)
     this.updateStatus = this.updateStatus.bind(this)
   }
@@ -30,12 +30,14 @@ export default class GameStatus extends Component {
   }
 
   teamList(names, icon, score, color) {
+    const iconValue = ["fas", icon]
     return (<List dense={true}>
+      <ListItem key='icon' divider={true}>
+        <Typography color={color}><FontAwesomeIcon icon={iconValue} size="3x"/></Typography>
+      </ListItem>
       <ListItem key='score' divider={true}>
-        <Icon className={icon} color={color} style={{ fontSize: 50 }}/><ListItemText
-          disableTypography
-          primary={<Typography   color={color} style={{ fontSize: 50 }}>{score}</Typography>}
-        /></ListItem>
+        <Typography color={color} style={{ fontSize: 50 }}>{score}</Typography>
+      </ListItem>
       {names.map((name) => (<ListItem key={name} divider={true}><ListItemText primary={name}/> </ListItem>))}
     </List>);
   }

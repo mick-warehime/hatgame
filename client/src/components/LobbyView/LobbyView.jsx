@@ -5,7 +5,9 @@ import { FormControl } from '@material-ui/core';
 import { Input } from '@material-ui/core';
 import { InputLabel } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
-import { Icon } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 export default class LobbyView extends Component {
   constructor(props) {
@@ -45,7 +47,7 @@ export default class LobbyView extends Component {
           style={{ minHeight: '50vh' }}
         >
           <Grid item xs={3}>
-            <Icon className="fas fa-hat-wizard fa" color="primary" style={{ fontSize: 150 }}/>
+            <Typography color="primary"><FontAwesomeIcon icon={["fas","hat-wizard"]} size="10x"/></Typography>
           </Grid>
           <Grid item xs={3}>
             <FormControl>

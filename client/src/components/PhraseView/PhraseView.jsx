@@ -7,7 +7,7 @@ import { Input } from '@material-ui/core';
 import { InputLabel } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
-import { Icon } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class PhraseView extends Component {
   constructor(props) {
@@ -38,7 +38,9 @@ export default class PhraseView extends Component {
           style={{ minHeight: '50vh' }}
         >
           <Grid item xs={6}>
-            <Typography style={{ fontSize: 25 }}>Add 3 phrases to the <Icon className="fas fa-hat-wizard fa" color="white" style={{ fontSize: 25 }}/></Typography>
+            <Typography style={{ fontSize: 25 }}>Add 3 phrases to the
+              <FontAwesomeIcon icon={['fas', 'hat-wizard']} />
+            </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography style={{ fontSize: 15 }}>(nouns work best)</Typography>
@@ -62,7 +64,9 @@ export default class PhraseView extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={3}>
-            <Button variant="contained" color="primary" onClick={this.onSubmit}><Icon className="fa fa-paper-plane" color="white" style={{ fontSize: 25 }}/></Button>
+            <Button variant="contained" color="primary" onClick={this.onSubmit}>
+              <FontAwesomeIcon icon={['fas' , 'paper-plane']} size="2x"/>
+            </Button>
           </Grid>
         </Grid>
         <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.SUMMARY)}>SUMMARY</Button>

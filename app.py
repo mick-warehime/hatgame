@@ -6,6 +6,8 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
+from server.icons import ICONS
+
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__, template_folder='../client/static')
@@ -45,12 +47,15 @@ def get_status():
 
 
 def update(score=0):
+    icons = ICONS.copy()
+    random.shuffle(icons)
+    icon1, icon2 = icons[0], icons[1]
     logging.info('GOT STATUS')
     response = {"team1": ["chad", "bardasd", "thad"],
-                "icon1": "fas fa-hat-wizard fa",
+                "icon1": icon1,
                 "score1": score,
                 "team2": ["brew", "drew", "agnew", "stu"],
-                "icon2": "fas fa-hat-wizard fa",
+                "icon2": icon2,
                 "score2": 0}
     logging.info(response)
     emit('update_status', response)
