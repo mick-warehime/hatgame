@@ -33,12 +33,12 @@ export default class ActivePlayerView extends Component {
             <Typography color="primary" style={{ fontSize: 45 }}>39s</Typography>
           </Grid>
           <Grid item xs={6}>
-          <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.TEST)}>
+            <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.TEST)}>
           Got it!
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.TEST)}>
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.TEST)}>
           Skip
-          </Button>
+            </Button>
           </Grid>
         </Grid>
       </div>
