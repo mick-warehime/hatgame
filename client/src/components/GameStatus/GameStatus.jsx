@@ -30,7 +30,7 @@ export default class GameStatus extends Component {
   }
 
   teamList(names, icon, score, color) {
-    const iconValue = ["fas", 'american-sign-language-interpreting']
+    const iconValue = ["fas", icon]
     return (<List dense={true}>
       <ListItem key='icon' divider={true}>
         <Typography color={color}><FontAwesomeIcon icon={iconValue} size="3x"/></Typography>
