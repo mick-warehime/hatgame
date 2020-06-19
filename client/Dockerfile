@@ -7,4 +7,4 @@ RUN npm install --loglevel warn
 
 EXPOSE 8080
 
-CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "start"]
