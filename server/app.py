@@ -6,11 +6,11 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
-from server.icons import ICONS
+from icons import ICONS
 
 logging.basicConfig(level=logging.INFO)
 
-app = Flask(__name__, template_folder='../client/static')
+app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins='http://0.0.0.0:8080')
 
 counter = 0
@@ -59,3 +59,7 @@ def update(score=0):
                 "score2": 0}
     logging.info(response)
     emit('update_status', response)
+
+
+if __name__ == '__main__':
+    app.run()
