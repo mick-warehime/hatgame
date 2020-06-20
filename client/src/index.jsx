@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Controller from './components/Controller/Controller';
+import './fontawesome';
 
-import Game from './components/Game/Game';
-
-ReactDOM.render(<Game />, document.getElementById('root'));
+ReactDOM.render(<Controller />, document.getElementById('root',),);

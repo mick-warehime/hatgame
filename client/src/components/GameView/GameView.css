@@ -1,0 +1,20 @@
+.game {
+  min-width: 600px;
+  min-height: 600px;
+  margin: auto;
+  padding: 10px;
+}
+
+.left-panel {
+  width: 300px;
+  min-height: 600px;
+  border:1px solid black;
+  float: left;
+}
+
+.right-panel {
+  min-height: 600px;
+  min-width: 600px;
+  border:1px solid red;
+  float: left;
+}
