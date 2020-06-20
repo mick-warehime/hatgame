@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "scripts": {
     "postinstall": "npm install --prefix client",
-    "start": "node frontend.js --prefix client"
+    "start": "node ./client/frontend.js"
   }
 }
