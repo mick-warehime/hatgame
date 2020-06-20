@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "start": "webpack-dev-server --mode development --host 0.0.0.0",
+    "dev": "webpack-dev-server --mode development --host 0.0.0.0",
     "build": "webpack --mode production",
+    "start": "node frontend.js",
     "lint": "npx eslint --ext '.jsx,.js' .",
     "fixlint": "npx eslint --fix --ext '.jsx,.js' .",
     "test": "jest"
@@ -52,6 +53,7 @@
     "@material-ui/core": "^4.10.2",
     "@material/layout-grid": "^6.0.0",
     "axios": "^0.19.2",
+    "express": "^4.17.1",
     "http": "0.0.1-security",
     "jsdom": "^16.2.2",
     "prop-types": "^15.7.2",
@@ -65,6 +67,7 @@
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "socket.io-json-parser": "^2.1.0",
+    "webpack": "^4.43.0",
     "ws": "^7.3.0"
   },
   "engines": {
