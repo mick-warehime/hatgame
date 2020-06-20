@@ -1,2 +1,2 @@
 backend: gunicorn --chdir server --worker-class eventlet -w 1  app:app
-frontend: node ./client/frontend.js
+web: node ./client/frontend.js
