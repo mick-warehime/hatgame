@@ -10,7 +10,7 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
 
-var port = process.env.PORT || 8080;
+var port = process.env.DEVPORT || process.env.PORT || 8080;
 var host = '0.0.0.0';
 app.listen(port, host, function() {
     console.log('Listening on port %d', port);
