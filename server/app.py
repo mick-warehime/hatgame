@@ -11,7 +11,7 @@ from icons import ICONS
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins='http://0.0.0.0:8080')
+socketio = SocketIO(app, cors_allowed_origins=['http://0.0.0.0:8080', 'https://stonebaby.herokuapp.com'])
 
 counter = 0
 
