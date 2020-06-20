@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "postinstall": "npm install --prefix client",
-    "build": "webpack --mode production v",
+    "build": "webpack --mode production --prefix client",
     "start": "node frontend.js --prefix client"
   }
 }
