@@ -1,0 +1,14 @@
+{
+  "name": "stonebaby",
+  "version": "1.0.0",
+  "main": "index.jsx",
+  "engines": {
+    "node": ">=8.10.0",
+    "npm": ">=6.14.4"
+  },
+  "scripts": {
+    "postinstall": "cd client && npm install",
+    "build": "(cd client && webpack --mode production)",
+    "start": "(cd client && webpack-dev-server --mode development --host 0.0.0.0)"
+  }
+}
