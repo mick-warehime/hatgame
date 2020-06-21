@@ -63,4 +63,4 @@ def update(score=0):
 
 
 if __name__ == '__main__':
-    socketio.run(app=app, host='https://stonebaby.herokuapp.com')
+    socketio.run(app=app, host='stonebaby.herokuapp.com')
