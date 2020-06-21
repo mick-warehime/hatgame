@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__, static_folder='./static/dist', template_folder='./static/dist', static_url_path='')
 socketio = SocketIO(app, cors_allowed_origins=['http://127.0.0.1:5000', 'http://0.0.0.0:8080',
-                                               'http://stonebaby.herokuapp.com'])
+                                               'https://stonebaby.herokuapp.com'])
 
 counter = 0
 
