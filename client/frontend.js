@@ -1,5 +1,7 @@
 var path = require("path");
 var express = require("express");
+var https = require("https");
+var fs = require('fs')
 
 var DIST_DIR = path.join(__dirname, "/dist");
 var app = express();
@@ -10,8 +12,11 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
 
-var port = process.env.DEVPORT || process.env.PORT || 8080;
+var port = process.env.DEVPORT || process.env.PORT || 443;
 var host = '0.0.0.0';
-app.listen(port, host, function() {
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(port, host, function() {
     console.log('Listening on port %d', port);
 });

@@ -11,7 +11,7 @@ from icons import ICONS
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins=['http://127.0.0.1:8080', 'http://0.0.0.0:8080',
+socketio = SocketIO(app, cors_allowed_origins=['https://127.0.0.1:8080', 'https://0.0.0.0:8080',
                                                'https://stonebaby.herokuapp.com'])
 
 counter = 0
@@ -63,4 +63,4 @@ def update(score=0):
 
 
 if __name__ == '__main__':
-    socketio.run()
+    socketio.run(app=app, ssl_context='adhoc')
