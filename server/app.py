@@ -6,7 +6,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
-from icons import ICONS
+from server.icons import ICONS
 
 logging.basicConfig(level=logging.INFO)
 
