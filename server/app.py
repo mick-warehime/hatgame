@@ -63,4 +63,4 @@ def update(score=0):
 
 
 if __name__ == '__main__':
-    socketio.run(app=app, ssl_context='adhoc')
+    socketio.run(app=app)
