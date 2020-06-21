@@ -38,12 +38,19 @@ def test_add_already_existing_game_room_gives_error(setup):
 
 
 @pytest.mark.parametrize('field', (PLAYER_NAME, ROOM_NAME))
-def test_create_game_missing_data(setup, field):
+@pytest.mark.parametrize('empty_data', (False, True))
+def test_create_game_missing_or_empty_data(setup, field, empty_data):
     room_name = 'room'
     player = 'Mick'
     request = {PLAYER_NAME: player, ROOM_NAME: room_name}
-    del request[field]
+    if empty_data:
+        request[field] = ''
+    else:
+        del request[field]
 
     result = create_game(request)
     assert ERROR in result
-    assert 'missing field' in result[ERROR]
+    if empty_data:
+        assert 'must not be blank' in result[ERROR]
+    else:
+        assert 'missing field' in result[ERROR]

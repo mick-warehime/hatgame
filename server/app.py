@@ -2,7 +2,7 @@ import logging
 import random
 import time
 from dataclasses import asdict
-from typing import Dict
+from typing import Dict, Any
 
 from flask import Flask
 from flask_socketio import SocketIO
@@ -53,19 +53,18 @@ def get_status():
     update()
 
 
-@socketio.on('create_game', namespace='/')
-def create_game(game_request: Dict[str, str]):
-    """Receive and respond to a game request message from a client.
+@socketio.on('create game', namespace='/')
+def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
+    """Receive and respond to a game creation request from a client.
 
     If a game with the specified name does not exist, create a game with that
     name. The room is populated by a single player with the specified name.
     This information is returned as a game_state message to the emitting client.
 
-    If a game with the specified name already exists, return an error message
-    to the client.
-
-    If the game_request does not have the expected fields, return an error
-    message to the client.
+    If a game with the specified name already exists an error message is
+    returned.
+    If the game_request does not have the expected field, or a field is empty,
+    then an error message is returned.
 
 
     Args:
@@ -84,6 +83,8 @@ def create_game(game_request: Dict[str, str]):
     for field in (ROOM_NAME, PLAYER_NAME):
         if field not in game_request:
             return {ERROR: f'game request missing field ({field}).'}
+        if not game_request[field]:
+            return {ERROR: f'game request field ({field}) must not be blank.'}
 
     if game_room_exists(game_request[ROOM_NAME]):
         return {ERROR: (f'Game room with name ({game_request[ROOM_NAME]}) '
