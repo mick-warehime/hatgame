@@ -10,7 +10,7 @@ import GameView from '../GameView/GameView';
 // To listen to message from the backend
 // socket.on('bar', (response) => {callback(response})
 import io from 'socket.io-client';
-const socket = io('https://0.0.0.0:443');
+const socket = io('http://0.0.0.0:5000');
 
 export default class Controller extends Component {
   constructor(props) {
