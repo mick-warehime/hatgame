@@ -11,7 +11,7 @@ app.get("*", function (req, res) {
 });
 
 var port = process.env.DEVPORT || process.env.PORT || 8080;
-var host = '0.0.0.0';
+var host = 'https://stonebaby.herokuapp.com';
 
 //http
 app.listen(port, host, function() {
