@@ -1,4 +1,5 @@
 import logging
+import os
 import random
 import time
 
@@ -69,4 +70,5 @@ def update(score=0):
 
 
 if __name__ == '__main__':
-    socketio.run(app=app, host='0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app=app, host='0.0.0.0', port=port)
