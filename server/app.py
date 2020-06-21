@@ -2,7 +2,8 @@ import logging
 import random
 import time
 
-from flask import Flask
+from flask import Flask, render_template
+from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
@@ -10,10 +11,16 @@ from icons import ICONS
 
 logging.basicConfig(level=logging.INFO)
 
+dist_dir = '../client/dist'
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins=['http://0.0.0.0:8080', 'https://stonebaby.herokuapp.com'])
-
+socketio = SocketIO(app, cors_allowed_origins=['http://0.0.0.0:8080', 'http://127.0.0.1:5000', 'http://0.0.0.0:5000'])
+CORS(app)
 counter = 0
+
+
+@app.route('/')
+def serve_static_index():
+    return render_template('index.html')
 
 
 @socketio.on("add_random", namespace='/')
