@@ -11,8 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default class GameStatus extends Component {
   constructor(props) {
     super(props);
-    this.state = { team1: [], score1: 0, icon1: "hat-wizard",
-      team2: [], score2: 0, icon2: "hat-wizard"};
+    this.state = { team1: [], score1: 0, icon1: "",
+      team2: [], score2: 0, icon2: ""};
     this.teamList = this.teamList.bind(this)
     this.updateStatus = this.updateStatus.bind(this)
   }

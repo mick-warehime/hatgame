@@ -1,8 +1,10 @@
 import logging
+import os
 import random
 import time
 
 from flask import Flask, render_template
+from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
@@ -11,11 +13,10 @@ from icons import ICONS
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__, static_folder='./static/dist', template_folder='./static/dist', static_url_path='')
-socketio = SocketIO(app, cors_allowed_origins=['http://127.0.0.1:5000', 'http://0.0.0.0:8080',
-                                               'https://stonebaby.herokuapp.com'])
+socketio = SocketIO(app)
+CORS(app)
 
 counter = 0
-
 
 @app.route('/')
 def index():
@@ -68,4 +69,5 @@ def update(score=0):
 
 
 if __name__ == '__main__':
-    socketio.run(app=app, host='stonebaby.herokuapp.com')
+    host = '0.0.0.0' if os.getenv('FLASK_ENV') else 'stonebaby.herokuapp.com'
+    socketio.run(app=app, host=host)

@@ -1,0 +1,8 @@
+{
+  "name": "stonebaby",
+  "version": "0.1.0",
+  "scripts": {
+    "postinstall": "npm install --prefix app/static",
+    "heroku-postbuild": "npm build --prefix app/static"
+  }
+}
