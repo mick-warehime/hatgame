@@ -15,8 +15,8 @@ app.get("*", function (req, res) {
 var port = process.env.DEVPORT || process.env.PORT || 443;
 var host = '0.0.0.0';
 https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
+  key: fs.readFileSync('./client/server.key'),
+  cert: fs.readFileSync('./client/server.cert')
 }, app).listen(port, host, function() {
     console.log('Listening on port %d', port);
 });
