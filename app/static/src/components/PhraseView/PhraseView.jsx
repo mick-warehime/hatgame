@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default class PhraseView extends Component {
   constructor(props) {
     super(props);
+    this.state = {ready: false, phrases: ['','','']}
+    this.setPhrase = this.setPhrase.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     //
   }
@@ -23,10 +25,22 @@ export default class PhraseView extends Component {
   onSubmit() {
   //
     console.log("submitted phrases")
+    const {ready, phrases} = this.state
+    this.setState({ready: !ready, phrases:phrases})
+  }
+
+  setPhrase(index, event){
+    var {phrases, ready} = this.state
+    phrases[index] = event.target.value
+    this.setState({ready: ready, phrases: phrases})
+    console.log(this.state)
   }
 
   render() {
     const {boardViewChanged} = this.props;
+    const {ready} = this.state;
+    const buttonText = !ready ? "Ready!" : "Not Ready"
+    const buttonColor = !ready ? "primary" : "secondary"
     return (
       <div>
         <Grid
@@ -48,28 +62,31 @@ export default class PhraseView extends Component {
           <Grid item xs={9}>
             <FormControl>
               <InputLabel htmlFor="phrase1-input">phrase</InputLabel>
-              <Input id="phrase1-input" onChange={this.updateName}/>
+              <Input id="phrase1-input" onChange={e => this.setPhrase(0, e)}/>
             </FormControl>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
               <InputLabel htmlFor="phrase2-input">phrase</InputLabel>
-              <Input id="phrase2-input" onChange={this.updateRoom}/>
+              <Input id="phrase2-input" onChange={e => this.setPhrase(1, e)} />
             </FormControl>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
               <InputLabel htmlFor="phrase3-input">phrase</InputLabel>
-              <Input id="phrase3-input" onChange={this.updateRoom}/>
+              <Input id="phrase3-input" onChange={e => this.setPhrase(2, e)}/>
             </FormControl>
           </Grid>
           <Grid item xs={3}>
-            <Button variant="contained" color="primary" onClick={() => boardViewChanged(Views.SUMMARY)}>
-              <FontAwesomeIcon icon={['fas' , 'paper-plane']} size="2x"/>
+            <Button variant="contained" color={buttonColor} onClick={this.onSubmit}>
+              {buttonText}
             </Button>
 
           </Grid>
         </Grid>
+        <Button variant="contained" color={buttonColor} onClick={() => boardViewChanged(Views.SUMMARY)}>
+              Summary
+        </Button>
       </div>
     )
   }
