@@ -9,10 +9,10 @@ from flask_socketio import emit
 
 from server.app_utils import validate_fields
 from server.icons import ICONS
-from server.model.fields import ROOM_NAME, ERROR, PLAYER_NAME, GAME_STATE, \
-    GameFields
-from server.model.rooms import game_room_exists, get_room_data, \
-    update_room_data, initialize_game_room, get_room_state
+from server.model.fields import (ROOM_NAME, ERROR, PLAYER_NAME, GAME_STATE,
+                                 GameFields, Namespaces)
+from server.model.rooms import (game_room_exists, initialize_game_room,
+                                get_room_state, get_room_data, update_room_data)
 
 logging.basicConfig(level=logging.INFO)
 
@@ -54,7 +54,7 @@ def get_status():
     update()
 
 
-@socketio.on('create_game', namespace='/')
+@socketio.on(Namespaces.CREATE_GAME.value)
 def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
     """Receive and respond to a game creation request from a client.
 
@@ -95,6 +95,60 @@ def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
     return {GAME_STATE: get_room_state(room_name)}
 
 
+@socketio.on(Namespaces.JOIN_GAME.value)
+def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
+    """Receive and respond to a join game request from a client.
+
+    If the game room exists and the player name is not already in use, then
+    the player is added to the game room. This is done by updating the game
+    state in that room and broadcasting the new state to all clients (
+    namespace 'player_joined'. The
+    player is added to the team with fewest players.
+
+    If the game room does not exist an error message is returned.
+    If the player name is already taken an error message is returned.
+    If a field is missing or blank in the request an error message is returned.
+
+    Args:
+        join_request: Dictionary containing a 'player name' and 'room name'
+            fields.
+
+    Returns:
+        On success, an empty dictionary is returned and the updated game
+        state is broadcast to all clients in the room.
+        Otherwise returns a dictionary with an 'error' field.
+    """
+
+    error = validate_fields(join_request, (ROOM_NAME, PLAYER_NAME),
+                            (ROOM_NAME, PLAYER_NAME))
+    if error:
+        return {ERROR: error}
+
+    room_name = join_request[ROOM_NAME]
+    if not game_room_exists(room_name):
+        return {ERROR: f'Room {room_name} does not exist.'}
+
+    # Get current teams and check player name not already in use
+    team_0_players = get_room_data(room_name, GameFields.TEAM_0_PLAYERS)
+    team_1_players = get_room_data(room_name, GameFields.TEAM_1_PLAYERS)
+
+    player_name = join_request[PLAYER_NAME]
+    if player_name in team_0_players or player_name in team_1_players:
+        return {ERROR: f'Player named {player_name} already in game.'}
+
+    # Add player to team with fewest members.
+    if len(team_0_players) > len(team_1_players):
+        team_1_players += (player_name,)
+        update_room_data(room_name, GameFields.TEAM_1_PLAYERS, team_1_players)
+    else:
+        team_0_players += (player_name,)
+        update_room_data(room_name, GameFields.TEAM_0_PLAYERS, team_0_players)
+
+    # Emit new game state to all clients.
+    socketio.emit(Namespaces.PLAYER_JOINED.value, get_room_state(room_name),
+                  broadcast=True)
+
+    return {}
 
 
 def update(score=0):
