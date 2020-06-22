@@ -7,8 +7,8 @@
     "dev": "webpack-dev-server --mode development --host 0.0.0.0",
     "build": "webpack --mode production",
     "start": "node frontend.js",
-    "lint": "npx eslint --ext '.jsx,.js' .",
-    "fixlint": "npx eslint --fix --ext '.jsx,.js' .",
+    "lint": "npx eslint --ext '.jsx,.js' src/",
+    "fixlint": "npx eslint --fix --ext '.jsx,.js' src/",
     "test": "jest"
   },
   "proxy": "http://localhost:5000/",
