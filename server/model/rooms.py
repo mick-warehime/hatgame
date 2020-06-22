@@ -1,7 +1,10 @@
 """Logic for handling multiple game rooms."""
-import logging
-from typing import Dict
+import random
+from dataclasses import asdict
+from typing import Dict, Any, Tuple
 
+from server.icons import ICONS
+from server.model.fields import GameFields
 from server.model.game_state import GameState
 
 _room_dict: Dict[str, GameState] = {}
@@ -12,19 +15,66 @@ def game_room_exists(room_name: str) -> bool:
     return room_name in _room_dict
 
 
+def initialize_game_room(room_name: str,
+                         first_player: str,
+                         icons: Tuple[str, str] = None
+                         ) -> None:
+    """Initialize a game room with the desired properties.
+
+    The game's name must not already exist in the database.
+    The game is populated by the first player, with team names set as default
+    values.
+
+    Args:
+        first_player: Name of the first player.
+        room_name: Name assigned to the game.
+        icons: Icons desired for the two teams. If not specified they are chosen
+            randomly.
+    """
+    assert room_name not in _room_dict, (
+        f'Tried to add ({room_name}) but a room with that name already '
+        f'exists.')
+    if icons is None:
+        icons = random.sample(ICONS, 2)
+
+    _room_dict[room_name] = GameState(room_name, [first_player], 'Team 1', 0,
+                                      icons[0], [], 'Team 2', 0, icons[1])
+
+
 def add_game_room(game_state: GameState) -> None:
     """Adds a new game to the database of existing games.
 
     The game's name must not already exist in the database.
     """
-    try:
-        assert game_state.name not in _room_dict
-    except AssertionError:
-        logging.ERROR(f'Tried to add ({game_state.name}) but a room with that'
-                      f' name already exists.')
-        raise AssertionError
+    assert game_state.name not in _room_dict, (
+        f'Tried to add ({game_state.name}) but a room with that name already '
+        f'exists.')
 
     _room_dict[game_state.name] = game_state
+
+
+def get_room_data(room_name: str, field: GameFields) -> Any:
+    """Return a copy of a given room's game state."""
+
+    assert game_room_exists(room_name), (f'Tried to get room state of '
+                                         f'non-existent room {room_name}.')
+
+    game_state = _room_dict[room_name]
+
+    return getattr(game_state, field.value)
+
+
+def update_room_data(room_name: str, field: GameFields, data: Any) -> None:
+    """Update the field of some room's game state."""
+    assert game_room_exists(room_name), f'Room {room_name} does not exist.'
+
+    setattr(_room_dict[room_name], field.value, data)
+
+
+def get_room_state(room_name: str) -> Dict[str, any]:
+    """Get all game state data for a given room."""
+    assert game_room_exists(room_name), f'Room {room_name} does not exist.'
+    return asdict(_room_dict[room_name])
 
 
 def clear_rooms() -> None:

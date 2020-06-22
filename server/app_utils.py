@@ -2,8 +2,8 @@
 from typing import Iterable, Dict, Any
 
 
-def validate_request(request: Dict[str, Any], required_fields: Iterable[str],
-                     non_empty_fields: Iterable[str] = ()) -> str:
+def validate_fields(request: Dict[str, Any], required_fields: Iterable[str],
+                    non_empty_fields: Iterable[str] = ()) -> str:
     """Return error if a request contains an invalid required fields.
 
     Args:

@@ -1,18 +1,18 @@
 import logging
 import random
 import time
-from dataclasses import asdict
 from typing import Dict, Any
 
 from flask import Flask
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
-from server.app_utils import validate_request
+from server.app_utils import validate_fields
 from server.icons import ICONS
-from server.model.fields import ROOM_NAME, ERROR, PLAYER_NAME, GAME_STATE
-from server.model.game_state import build_game
-from server.model.rooms import game_room_exists, add_game_room
+from server.model.fields import ROOM_NAME, ERROR, PLAYER_NAME, GAME_STATE, \
+    GameFields
+from server.model.rooms import game_room_exists, get_room_data, \
+    update_room_data, initialize_game_room, get_room_state
 
 logging.basicConfig(level=logging.INFO)
 
@@ -54,7 +54,7 @@ def get_status():
     update()
 
 
-@socketio.on('create game', namespace='/')
+@socketio.on('create_game', namespace='/')
 def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
     """Receive and respond to a game creation request from a client.
 
@@ -81,18 +81,20 @@ def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
     """
 
     # Validate request
-    error = validate_request(game_request, (ROOM_NAME, PLAYER_NAME),
-                             (ROOM_NAME, PLAYER_NAME))
+    error = validate_fields(game_request, (ROOM_NAME, PLAYER_NAME),
+                            (ROOM_NAME, PLAYER_NAME))
     if error:
         return {ERROR: error}
 
-    if game_room_exists(game_request[ROOM_NAME]):
-        return {ERROR: (f'Game room with name ({game_request[ROOM_NAME]}) '
+    room_name = game_request[ROOM_NAME]
+    if game_room_exists(room_name):
+        return {ERROR: (f'Game room with name ({room_name}) '
                         f'already exists.')}
 
-    game_state = build_game(game_request[PLAYER_NAME], game_request[ROOM_NAME])
-    add_game_room(game_state)
-    return {GAME_STATE: asdict(game_state)}
+    initialize_game_room(room_name, game_request[PLAYER_NAME])
+    return {GAME_STATE: get_room_state(room_name)}
+
+
 
 
 def update(score=0):
