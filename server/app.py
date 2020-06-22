@@ -8,6 +8,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
+from server.app_utils import validate_request
 from server.icons import ICONS
 from server.model.fields import ROOM_NAME, ERROR, PLAYER_NAME, GAME_STATE
 from server.model.game_state import build_game
@@ -80,11 +81,10 @@ def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
     """
 
     # Validate request
-    for field in (ROOM_NAME, PLAYER_NAME):
-        if field not in game_request:
-            return {ERROR: f'game request missing field ({field}).'}
-        if not game_request[field]:
-            return {ERROR: f'game request field ({field}) must not be blank.'}
+    error = validate_request(game_request, (ROOM_NAME, PLAYER_NAME),
+                             (ROOM_NAME, PLAYER_NAME))
+    if error:
+        return {ERROR: error}
 
     if game_room_exists(game_request[ROOM_NAME]):
         return {ERROR: (f'Game room with name ({game_request[ROOM_NAME]}) '

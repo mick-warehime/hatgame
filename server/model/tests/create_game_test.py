@@ -51,6 +51,6 @@ def test_create_game_missing_or_empty_data(setup, field, empty_data):
     result = create_game(request)
     assert ERROR in result
     if empty_data:
-        assert 'must not be blank' in result[ERROR]
+        assert 'must not evaluate to' in result[ERROR]
     else:
         assert 'missing field' in result[ERROR]
