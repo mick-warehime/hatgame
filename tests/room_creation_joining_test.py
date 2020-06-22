@@ -1,7 +1,7 @@
 """Tests of game creation / joining API"""
 import pytest
 
-from server.app import create_game, join_game
+from app.app import create_game, join_game
 from server.model.fields import PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE, \
     GameFields
 from server.model.rooms import clear_rooms, game_room_exists, get_room_data

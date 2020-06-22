@@ -2,27 +2,25 @@
 
 ### Installing
 1. install python requirements from requirements.txt
+
+### Build the Static React Components (optional)
+You only need to do this if you update anything in app/static/*
 2. install npm (https://www.npmjs.com/get-npm)
-3. launch terminal > cd project root > cd client
-4. run npm install
+3. cd project root > app > static
+4. npm install --save
+5. npm build
 
-### Running
-
-Start the backend server
+### Start the backend server
 1) Open a new terminal
 2) cd project root
 3) export FLASK_APP=app.py
 4) export FLASK_ENV=development
 5) export FLASK_DEBUG=1
 6) flask run
-
-
-Start the frontend server
-1) cd project root
-2) cd client
-3) npm run dev
-4) see a line like 'Project is running at http://0.0.0.0:8080/'
-5) Ctrl Click URL / launch chrome and go to  'http://0.0.0.0:8080/'
-6) Party
-
-
+Note - you can also make a custom pycharm run configuration 
+Script path: <path to flask bin - the output of 'which flask'>  
+paramters: run
+Environment Variables:
+FLASK_APP=app.py
+FLASK_ENV=development
+FLASK_DEBUG=1

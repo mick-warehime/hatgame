@@ -1,14 +1,16 @@
 import logging
+import os
 import random
 import time
 from typing import Dict, Any
 
-from flask import Flask
+from flask import Flask, render_template
+from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
+from app.icons import ICONS
 from server.app_utils import validate_fields
-from server.icons import ICONS
 from server.model.fields import (ROOM_NAME, ERROR, PLAYER_NAME, GAME_STATE,
                                  GameFields, Namespaces)
 from server.model.rooms import (game_room_exists, initialize_game_room,
@@ -16,12 +18,15 @@ from server.model.rooms import (game_room_exists, initialize_game_room,
 
 logging.basicConfig(level=logging.INFO)
 
-app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins=['http://127.0.0.1:8080',
-                                               'http://0.0.0.0:8080',
-                                               'http://stonebaby.herokuapp.com'])
+app = Flask(__name__, static_folder='./static/dist', template_folder='./static/dist', static_url_path='')
+socketio = SocketIO(app)
+CORS(app)
 
 counter = 0
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @socketio.on("add_random", namespace='/')
@@ -167,4 +172,5 @@ def update(score=0):
 
 
 if __name__ == '__main__':
-    socketio.run(app=app, host='stonebaby.herokuapp.com')
+    host = '0.0.0.0' if os.getenv('FLASK_ENV') else 'stonebaby.herokuapp.com'
+    socketio.run(app=app, host=host)

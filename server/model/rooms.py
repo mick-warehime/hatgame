@@ -3,7 +3,7 @@ import random
 from dataclasses import asdict
 from typing import Dict, Any, Tuple
 
-from server.icons import ICONS
+from app.icons import ICONS
 from server.model.fields import GameFields
 from server.model.game_state import GameState
 
