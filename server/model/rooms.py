@@ -41,18 +41,6 @@ def initialize_game_room(room_name: str,
                                       icons[0], [], 'Team 2', 0, icons[1])
 
 
-def add_game_room(game_state: GameState) -> None:
-    """Adds a new game to the database of existing games.
-
-    The game's name must not already exist in the database.
-    """
-    assert game_state.name not in _room_dict, (
-        f'Tried to add ({game_state.name}) but a room with that name already '
-        f'exists.')
-
-    _room_dict[game_state.name] = game_state
-
-
 def get_room_data(room_name: str, field: GameFields) -> Any:
     """Return a copy of a given room's game state."""
 
