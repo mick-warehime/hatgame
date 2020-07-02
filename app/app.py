@@ -9,9 +9,9 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
-from app.icons import ICONS
 from app.controller import server_client_interface
-from app.model import fields
+from app.icons import ICONS
+from app.model.fields import Namespaces
 
 logging.basicConfig(level=logging.INFO)
 
@@ -58,12 +58,12 @@ def get_status():
     update()
 
 
-@socketio.on(fields.Namespaces.CREATE_GAME.value)
+@socketio.on(Namespaces.CREATE_GAME.value)
 def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
     return server_client_interface.create_game_action(game_request)
 
 
-@socketio.on(fields.Namespaces.JOIN_GAME.value)
+@socketio.on(Namespaces.JOIN_GAME.value)
 def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     return server_client_interface.join_game_action(join_request)
 

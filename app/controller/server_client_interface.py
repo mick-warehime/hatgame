@@ -6,6 +6,7 @@ from flask_socketio import emit
 
 from app.app_utils import validate_fields
 from app.model import fields
+from app.model.fields import Namespaces
 from app.model.rooms import (game_room_exists, get_room_state,
                              initialize_game_room, update_room)
 
@@ -62,7 +63,8 @@ def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
     update_room(room_name, room)
 
     # Emit new game state to all clients.
-    emit(fields.Namespaces.PLAYER_JOINED.value, asdict(room), broadcast=True)
+    emit(fields.Namespaces.PLAYER_JOINED.value, asdict(room), broadcast=True,
+         namespace=Namespaces.JOIN_GAME.value)
 
     return {}
 
