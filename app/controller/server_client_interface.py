@@ -108,3 +108,25 @@ def create_game_action(game_request: Dict[str, str]) -> Dict[str, Any]:
 
     initialize_game_room(room_name, game_request[fields.PLAYER_NAME])
     return {fields.GAME_STATE: asdict(get_room_state(room_name))}
+
+
+def create_test_game() -> None:
+    """Add a test game to the data model.
+
+    The game has room name 'test' and is populated with random characters.
+    If the game already exists then this function does nothing.
+    """
+
+    room_name = fields.TEST_GAME
+    if game_room_exists(room_name):
+        return
+
+    # initialize room
+    initialize_game_room(room_name, 'Mick')
+
+    # populate room with players
+    room = get_room_state(room_name)
+    room = replace(room, **dict(
+        team_0_players=('Mick', 'Liz', 'M\'Lickz'),
+        team_1_players=('Dvir', 'Celeste', 'Boaz', 'Ronen')))
+    update_room(room_name, room)

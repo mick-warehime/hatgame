@@ -3,7 +3,8 @@ import pytest
 
 from app.app import create_game
 from app.controller.server_client_interface import join_game_action
-from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE)
+from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
+                              TEST_GAME)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state
 
 
@@ -91,3 +92,11 @@ def test_join_room_does_not_exist(setup):
     result = join_game_action({PLAYER_NAME: 'Mick', ROOM_NAME: 'Nonexistent'})
     assert ERROR in result
     assert 'does not exist' in result[ERROR]
+
+
+def test_test_room_created_on_app_load():
+    assert game_room_exists(TEST_GAME)
+
+    room = get_room_state(TEST_GAME)
+    assert 'Mick' in room.team_0_players
+    assert 'Dvir' in room.team_1_players

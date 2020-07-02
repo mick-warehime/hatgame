@@ -22,6 +22,8 @@ CORS(app)
 
 counter = 0
 
+server_client_interface.create_test_game()
+
 
 @app.route('/')
 def index():
