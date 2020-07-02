@@ -15,6 +15,14 @@ def setup():
     yield None
 
 
+def test_test_room_created_on_app_load():
+    assert game_room_exists(TEST_GAME)
+
+    room = get_room_state(TEST_GAME)
+    assert 'Mick' in room.team_0_players
+    assert 'Dvir' in room.team_1_players
+
+
 def test_add_valid_game_room_creates_room(setup):
     room_name = 'room'
     player = 'Mick'
@@ -92,11 +100,3 @@ def test_join_room_does_not_exist(setup):
     result = join_game_action({PLAYER_NAME: 'Mick', ROOM_NAME: 'Nonexistent'})
     assert ERROR in result
     assert 'does not exist' in result[ERROR]
-
-
-def test_test_room_created_on_app_load():
-    assert game_room_exists(TEST_GAME)
-
-    room = get_room_state(TEST_GAME)
-    assert 'Mick' in room.team_0_players
-    assert 'Dvir' in room.team_1_players
