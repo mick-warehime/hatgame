@@ -1,9 +1,10 @@
 """Tests of game creation / joining API"""
 import pytest
 
-from app.app import create_game, join_game
-from server.model.fields import PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE, \
-    GameFields
+from app.app import create_game
+from server.controller.server_client_interface import join_game_action
+from server.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
+                                 GameFields)
 from server.model.rooms import clear_rooms, game_room_exists, get_room_data
 
 
@@ -66,7 +67,7 @@ def test_create_then_join_one_player_per_team(setup):
     assert ERROR not in result
 
     player2 = 'Dvir'
-    result = join_game({PLAYER_NAME: player2, ROOM_NAME: room_name})
+    result = join_game_action({PLAYER_NAME: player2, ROOM_NAME: room_name})
     assert ERROR not in result
 
     assert player in get_room_data(room_name, GameFields.TEAM_0_PLAYERS)
@@ -81,12 +82,12 @@ def test_join_room_same_player_name(setup):
     result = create_game(request)
     assert ERROR not in result
 
-    result = join_game({PLAYER_NAME: player, ROOM_NAME: room_name})
+    result = join_game_action({PLAYER_NAME: player, ROOM_NAME: room_name})
     assert ERROR in result
     assert 'already in game' in result[ERROR]
 
 
 def test_join_room_does_not_exist(setup):
-    result = join_game({PLAYER_NAME: 'Mick', ROOM_NAME: 'Nonexistent'})
+    result = join_game_action({PLAYER_NAME: 'Mick', ROOM_NAME: 'Nonexistent'})
     assert ERROR in result
     assert 'does not exist' in result[ERROR]

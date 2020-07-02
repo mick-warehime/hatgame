@@ -23,5 +23,5 @@ class GameFields(Enum):
 # Enumeration of all namespaces used with socketio.
 class Namespaces(Enum):
     CREATE_GAME = '/create_game'
-    JOIN_GAME = '/join_game'
+    JOIN_GAME = '/join_game_action'
     PLAYER_JOINED = '/player_joined'
