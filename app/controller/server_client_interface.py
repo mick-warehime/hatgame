@@ -62,8 +62,7 @@ def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
     update_room(room_name, room)
 
     # Emit new game state to all clients.
-    emit(fields.Namespaces.PLAYER_JOINED.value,
-         asdict(get_room_state(room_name)), broadcast=True)
+    emit(fields.Namespaces.PLAYER_JOINED.value, asdict(room), broadcast=True)
 
     return {}
 

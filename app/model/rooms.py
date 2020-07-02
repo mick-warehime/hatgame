@@ -35,8 +35,8 @@ def initialize_game_room(room_name: str,
     if icons is None:
         icons = random.sample(ICONS, 2)
 
-    _room_dict[room_name] = GameState(room_name, [first_player], 'Team 1', 0,
-                                      icons[0], [], 'Team 2', 0, icons[1])
+    _room_dict[room_name] = GameState(room_name, (first_player,), 'Team 1', 0,
+                                      icons[0], (), 'Team 2', 0, icons[1])
 
 
 def update_room(room_name: str, data: GameState) -> None:
