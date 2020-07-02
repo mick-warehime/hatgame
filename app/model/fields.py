@@ -11,4 +11,4 @@ GAME_STATE = 'game state'
 class Namespaces(Enum):
     CREATE_GAME = '/create_game'
     JOIN_GAME = '/join_game_action'
-    PLAYER_JOINED = '/player_joined'
+    ROOM_UPDATED = '/room_updated'
