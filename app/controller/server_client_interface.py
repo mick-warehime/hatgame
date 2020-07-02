@@ -1,13 +1,13 @@
 """Implementation of server request/repsonse logic."""
+from dataclasses import asdict, replace
 from typing import Dict, Any
 
 from flask_socketio import emit
 
 from app.app_utils import validate_fields
 from app.model import fields
-from app.model.rooms import (game_room_exists, get_room_data,
-                             update_room_data, get_room_state,
-                             initialize_game_room)
+from app.model.rooms import (game_room_exists, get_room_state,
+                             initialize_game_room, update_room)
 
 
 def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
@@ -44,26 +44,26 @@ def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
         return {fields.ERROR: f'Room {room_name} does not exist.'}
 
     # Get current teams and check player name not already in use
-    team_0_players = get_room_data(room_name, fields.GameFields.TEAM_0_PLAYERS)
-    team_1_players = get_room_data(room_name, fields.GameFields.TEAM_1_PLAYERS)
+    room = get_room_state(room_name)
 
     player_name = join_request[fields.PLAYER_NAME]
-    if player_name in team_0_players or player_name in team_1_players:
+    if player_name in room.team_0_players or player_name in room.team_1_players:
         return {fields.ERROR: f'Player named {player_name} already in game.'}
 
     # Add player to team with fewest members.
-    if len(team_0_players) > len(team_1_players):
-        team_1_players += (player_name,)
-        update_room_data(room_name, fields.GameFields.TEAM_1_PLAYERS,
-                         team_1_players)
+    if len(room.team_0_players) > len(room.team_1_players):
+        players = room.team_1_players + (player_name,)
+        room = replace(room, **dict(team_1_players=players))
+
     else:
-        team_0_players += (player_name,)
-        update_room_data(room_name, fields.GameFields.TEAM_0_PLAYERS,
-                         team_0_players)
+        players = room.team_0_players + (player_name,)
+        room = replace(room, **dict(team_0_players=players))
+
+    update_room(room_name, room)
 
     # Emit new game state to all clients.
-    emit(fields.Namespaces.PLAYER_JOINED.value, get_room_state(room_name),
-         broadcast=True)
+    emit(fields.Namespaces.PLAYER_JOINED.value,
+         asdict(get_room_state(room_name)), broadcast=True)
 
     return {}
 
@@ -106,4 +106,4 @@ def create_game_action(game_request: Dict[str, str]) -> Dict[str, Any]:
                                f'already exists.')}
 
     initialize_game_room(room_name, game_request[fields.PLAYER_NAME])
-    return {fields.GAME_STATE: get_room_state(room_name)}
+    return {fields.GAME_STATE: asdict(get_room_state(room_name))}

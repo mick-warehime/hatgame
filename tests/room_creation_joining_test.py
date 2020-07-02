@@ -3,9 +3,8 @@ import pytest
 
 from app.app import create_game
 from app.controller.server_client_interface import join_game_action
-from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
-                              GameFields)
-from app.model.rooms import clear_rooms, game_room_exists, get_room_data
+from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE)
+from app.model.rooms import clear_rooms, game_room_exists, get_room_state
 
 
 # Any pytest function that has setup as an argument invokes this method
@@ -70,8 +69,9 @@ def test_create_then_join_one_player_per_team(setup):
     result = join_game_action({PLAYER_NAME: player2, ROOM_NAME: room_name})
     assert ERROR not in result
 
-    assert player in get_room_data(room_name, GameFields.TEAM_0_PLAYERS)
-    assert player2 in get_room_data(room_name, GameFields.TEAM_1_PLAYERS)
+    room = get_room_state(room_name)
+    assert player in room.team_0_players
+    assert player2 in room.team_1_players
 
 
 def test_join_room_same_player_name(setup):
