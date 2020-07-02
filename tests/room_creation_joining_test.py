@@ -2,10 +2,10 @@
 import pytest
 
 from app.app import create_game
-from server.controller.server_client_interface import join_game_action
-from server.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
-                                 GameFields)
-from server.model.rooms import clear_rooms, game_room_exists, get_room_data
+from app.controller.server_client_interface import join_game_action
+from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
+                              GameFields)
+from app.model.rooms import clear_rooms, game_room_exists, get_room_data
 
 
 # Any pytest function that has setup as an argument invokes this method

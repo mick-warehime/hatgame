@@ -4,8 +4,8 @@ from dataclasses import asdict
 from typing import Dict, Any, Tuple
 
 from app.icons import ICONS
-from server.model.fields import GameFields
-from server.model.game_state import GameState
+from app.model.fields import GameFields
+from app.model.game_state import GameState
 
 _room_dict: Dict[str, GameState] = {}
 

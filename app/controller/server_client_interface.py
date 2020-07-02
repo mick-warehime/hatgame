@@ -3,11 +3,11 @@ from typing import Dict, Any
 
 from flask_socketio import emit
 
-from server.app_utils import validate_fields
-from server.model import fields
-from server.model.rooms import (game_room_exists, get_room_data,
-                                update_room_data, get_room_state,
-                                initialize_game_room)
+from app.app_utils import validate_fields
+from app.model import fields
+from app.model.rooms import (game_room_exists, get_room_data,
+                             update_room_data, get_room_state,
+                             initialize_game_room)
 
 
 def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:

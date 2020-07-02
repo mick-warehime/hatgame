@@ -10,8 +10,8 @@ from flask_socketio import SocketIO
 from flask_socketio import emit
 
 from app.icons import ICONS
-from server.controller import server_client_interface
-from server.model import fields
+from app.controller import server_client_interface
+from app.model import fields
 
 logging.basicConfig(level=logging.INFO)
 
