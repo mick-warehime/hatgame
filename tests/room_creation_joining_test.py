@@ -15,7 +15,7 @@ def setup():
     yield None
 
 
-def test_test_room_created_on_app_load():
+def test_room_created_on_app_load():
     assert game_room_exists(TEST_GAME)
 
     room = get_room_state(TEST_GAME)

@@ -1,4 +1,5 @@
 """Implementation of server request/repsonse logic."""
+import logging
 from dataclasses import asdict, replace
 from typing import Dict, Any
 
@@ -63,8 +64,11 @@ def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
     update_room(room_name, room)
 
     # Emit new game state to all clients.
-    emit(fields.Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
-         namespace=Namespaces.ROOM_UPDATED.value)
+    try:
+        emit(fields.Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
+             namespace=Namespaces.ROOM_UPDATED.value)
+    except RuntimeError:  # This occurs during tests.
+        logging.log(logging.ERROR, 'Runtime error during emit.')
 
     return {}
 
