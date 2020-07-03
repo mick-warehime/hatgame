@@ -2,21 +2,28 @@ import logging
 import os
 import random
 import time
+from typing import Dict, Any
 
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
-from icons import ICONS
+from app.controller import server_client_interface
+from app.icons import ICONS
+from app.model.fields import Namespaces
 
 logging.basicConfig(level=logging.INFO)
 
-app = Flask(__name__, static_folder='./static/dist', template_folder='./static/dist', static_url_path='')
+app = Flask(__name__, static_folder='./static/dist',
+            template_folder='./static/dist', static_url_path='')
 socketio = SocketIO(app)
 CORS(app)
 
 counter = 0
+
+server_client_interface.create_test_game()
+
 
 @app.route('/')
 def index():
@@ -51,6 +58,16 @@ def timer(duration):
 @socketio.on("get_status", namespace='/')
 def get_status():
     update()
+
+
+@socketio.on(Namespaces.CREATE_GAME.value)
+def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
+    return server_client_interface.create_game_action(game_request)
+
+
+@socketio.on(Namespaces.JOIN_GAME.value)
+def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
+    return server_client_interface.join_game_action(join_request)
 
 
 def update(score=0):
