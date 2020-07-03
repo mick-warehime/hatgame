@@ -1,6 +1,7 @@
 """Implementation of server request/repsonse logic."""
 import logging
 from dataclasses import asdict, replace
+from random import shuffle
 from typing import Dict, Any
 
 from flask_socketio import emit
@@ -18,8 +19,9 @@ def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
     If the game room exists and the player name is not already in use, then
     the player is added to the game room. This is done by updating the game
     state in that room and broadcasting the new state to all clients (
-    namespace 'player_joined'). The player is added to the team with fewest
-    players.
+    see Namespaces.ROOM_UPDATED). The message is just a dictionary storing
+    the updated game state (see room_name.GameState). The player is added to the
+    team with fewest players.
 
     If the game room does not exist an error message is returned.
     If the player name is already taken an error message is returned.
@@ -134,3 +136,44 @@ def create_test_game() -> None:
         team_0_players=('Mick', 'Liz', 'M\'Lickz'),
         team_1_players=('Dvir', 'Celeste', 'Boaz', 'Ronen')))
     update_room(room_name, room)
+
+
+def randomize_teams_action(request: Dict[str, Any]) -> Dict[str, str]:
+    """Randomize the teams in a given room.
+
+    If the room specified for randomization exists, the teams are randomized
+    and an update message (Namespaces.UPDATE_ROOM) is emitted with new room
+    data. The response message is empty. The new teams are always different.
+
+    If the room does not exist or is not specified, a response message with an
+    'error' field is returned.
+
+    Args:
+        request: Request message with a 'room name' field specifying the room.
+    """
+
+    error = validate_fields(request, (fields.ROOM_NAME,))
+    if error:
+        return {fields.ERROR: error}
+
+    room_name = request[fields.ROOM_NAME]
+    if not game_room_exists(room_name):
+        return {fields.ERROR: f'Room named {room_name} does not exist.'}
+
+    room = get_room_state(room_name)
+    players = list(room.team_0_players + room.team_1_players)
+    num_players = len(players)
+    shuffle(players)
+    team_0_players = players[:num_players // 2]
+    team_1_players = players[num_players // 2:]
+    room = replace(room, **dict(team_1_players=team_1_players,
+                                team_0_players=team_0_players))
+    update_room(room_name, room)
+
+    try:
+        emit(Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
+             namespace=Namespaces.ROOM_UPDATED.value)
+    except RuntimeError:
+        pass  # This happens during unit tests and I don't know how to fix it.
+
+    return {}

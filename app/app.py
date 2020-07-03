@@ -70,6 +70,11 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     return server_client_interface.join_game_action(join_request)
 
 
+@socketio.on(Namespaces.RANDOMIZE_ROOM.value)
+def randomize_room(request: Dict[str, str]) -> Dict[str, Any]:
+    return server_client_interface.randomize_teams_action(request)
+
+
 def update(score=0):
     icons = ICONS.copy()
     random.shuffle(icons)
