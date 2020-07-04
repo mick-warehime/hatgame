@@ -12,29 +12,51 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default class LobbyView extends Component {
   constructor(props) {
     super(props);
-    this.state = { room: '', name: ''};
-    this.onSubmit = this.onSubmit.bind(this)
+    this.state = { room: '', player: ''};
+    this.joinGame = this.joinGame.bind(this)
+    this.createGame = this.createGame.bind(this)
     this.updateRoom = this.updateRoom.bind(this)
-    this.updateName = this.updateName.bind(this)
+    this.updatePlayer = this.updatePlayer.bind(this)
+    this.handleResponse = this.handleResponse.bind(this)
   }
 
-  onSubmit(){
-    //     const {name, room} = this.state;
-    const {onViewChanged} = this.props
-    onViewChanged()
+  joinGame(){
+    const {socket} = this.props
+    const {player, room} = this.state;
+    socket.emit('join_game', {player:player, room:room}, (response) => this.handleResponse(response))
   }
 
-  updateName(e) {
+  createGame(){
+    const {socket} = this.props
+    const {player, room} = this.state;
+    socket.emit('create_game', {player:player, room:room}, (response) => this.handleResponse(response))
+  }
+
+  handleResponse(resp){
+    if (resp.error){
+        this.setState({error:resp.error})
+    } else {
+        this.setState({error:''})
+    }
+    //     const {onViewChanged} = this.props
+    this.forceUpdate()
+    //     const {onViewChanged} = this.props
+  }
+
+  updatePlayer(e) {
     const {room} = this.state;
-    this.setState({name: e.target.value, room: room})
+    this.setState({player: e.target.value, room: room})
+    this.forceUpdate()
   }
 
   updateRoom(e) {
-    const {name} = this.state;
-    this.setState({room: e.target.value, name: name})
+    const {player} = this.state;
+    this.setState({room: e.target.value, player: player})
+    this.forceUpdate()
   }
 
   render() {
+    const {error} = this.state
     return (
       <div className="lobby">
 
@@ -51,8 +73,8 @@ export default class LobbyView extends Component {
           </Grid>
           <Grid item xs={3}>
             <FormControl>
-              <InputLabel htmlFor="name-input">Name</InputLabel>
-              <Input id="name-input" onChange={this.updateName}/>
+              <InputLabel htmlFor="player-input">Name</InputLabel>
+              <Input id="player-input" onChange={this.updatePlayer}/>
             </FormControl>
           </Grid>
           <Grid item xs={3}>
@@ -62,9 +84,10 @@ export default class LobbyView extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={3}>
-            <Button color="primary" onClick={this.onSubmit}>Join</Button>
-            <Button color="primary" onClick={this.onSubmit}>Create</Button>
+            <Button color="primary" onClick={this.joinGame}>Join</Button>
+            <Button color="primary" onClick={this.createGame}>Create</Button>
           </Grid>
+          <Typography color="secondary">{error}</Typography>
         </Grid>
       </div>
     );
@@ -73,4 +96,5 @@ export default class LobbyView extends Component {
 
 LobbyView.propTypes = {
   onViewChanged: PropTypes.func,
+  socket: PropTypes.any,
 }

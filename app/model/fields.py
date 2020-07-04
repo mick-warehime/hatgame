@@ -2,14 +2,14 @@
 from enum import Enum
 
 ERROR = 'error'
-ROOM_NAME = 'room name'
-PLAYER_NAME = 'player name'
-GAME_STATE = 'game state'
-TEST_GAME = 'test game'
+ROOM_NAME = 'room'
+PLAYER_NAME = 'player'
+GAME_STATE = 'game_state'
+TEST_GAME = 'test_game'
 
 
 # Enumeration of all namespaces used with socketio.
 class Namespaces(Enum):
-    CREATE_GAME = '/create_game'
-    JOIN_GAME = '/join_game_action'
-    ROOM_UPDATED = '/room_updated'
+    CREATE_GAME = 'create_game'
+    JOIN_GAME = 'join_game'
+    ROOM_UPDATED = 'room_updated'
