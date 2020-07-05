@@ -15,3 +15,4 @@ class Namespaces(Enum):
     JOIN_GAME = 'join_game'
     ROOM_UPDATED = 'room_updated'
     RANDOMIZE_ROOM = 'randomize_room'
+    SUBMIT_PHRASES = 'submit_phrases'

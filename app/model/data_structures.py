@@ -2,7 +2,9 @@
 
 The implementation is hidden from app.py.
 """
-from typing import List, Iterable
+from functools import reduce
+from itertools import chain
+from typing import List, Iterable, Set
 
 from attr import dataclass
 
@@ -33,7 +35,8 @@ class Room:
     team_2_icon: str
 
     def all_players(self) -> Iterable[Player]:
-        for p in self.team_1_players:
-            yield p
-        for p in self.team_2_players:
-            yield p
+        return chain(self.team_1_players, self.team_2_players)
+
+    def all_phrases(self) -> Set[str]:
+        return reduce(set.union, (set(p.phrases) for p in self.all_players()),
+                      set())
