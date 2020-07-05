@@ -1,9 +1,11 @@
 """Tests of game creation / joining API"""
+import random
 
 import pytest
 
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
+from app.application import randomize_room
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state
@@ -24,6 +26,21 @@ def test_room_created():
     room = get_room_state(TEST_GAME)
     assert 'Mick' in room.team_1_players
     assert 'Dvir' in room.team_2_players
+
+
+def test_randomize_room():
+    create_test_game()
+
+    room = get_room_state(TEST_GAME)
+    team_2 = room.team_2_players
+    team_1 = room.team_1_players
+    random.seed(11)  # for determinism. There is a small chance the room will
+    # remain unchanged
+    randomize_room({ROOM_NAME: TEST_GAME})
+
+    room = get_room_state(TEST_GAME)
+    assert team_2 != room.team_2_players
+    assert team_1 != room.team_1_players
 
 
 def test_add_valid_game_room_creates_room(setup):
