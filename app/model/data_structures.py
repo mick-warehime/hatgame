@@ -15,7 +15,8 @@ class Player:
     phrases: List[str]
 
 
-def build_player(name: str, ready: bool = False,
+def build_player(name: str,
+                 ready: bool = False,
                  phrases: Iterable[str] = ()) -> Player:
     """Builder function for Player objects"""
     return Player(name, ready, list(phrases))
