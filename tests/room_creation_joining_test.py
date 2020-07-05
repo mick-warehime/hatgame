@@ -5,7 +5,7 @@ import pytest
 
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
-from app.application import randomize_room
+from app.actions.randomize_teams_action import randomize_teams
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state
@@ -36,7 +36,7 @@ def test_randomize_room():
     team_1 = room.team_1_players
     random.seed(11)  # for determinism. There is a small chance the room will
     # remain unchanged
-    randomize_room({ROOM_NAME: TEST_GAME})
+    randomize_teams({ROOM_NAME: TEST_GAME})
 
     room = get_room_state(TEST_GAME)
     assert team_2 != room.team_2_players
