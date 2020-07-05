@@ -18,7 +18,7 @@ export default class Controller extends Component {
     this.state = {view: Views.LOBBY}
     this.onViewChanged = this.onViewChanged.bind(this)
   }
-
+  
   onViewChanged() {
     const {view} = this.state
     var newView = Views.LOBBY

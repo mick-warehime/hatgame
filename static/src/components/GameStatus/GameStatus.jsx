@@ -15,6 +15,7 @@ export default class GameStatus extends Component {
       team2: [], score2: 0, icon2: ""};
     this.teamList = this.teamList.bind(this)
     this.updateRoom = this.updateRoom.bind(this)
+    this.leaveGame = this.leaveGame.bind(this)
   }
 
   componentDidMount () {
@@ -27,6 +28,12 @@ export default class GameStatus extends Component {
     this.setState({team1: resp["team1"], score1:resp["score1"], icon1:resp["icon1"],
       team2: resp["team2"], score2:resp["score2"], icon2:resp["icon2"]})
     this.forceUpdate();
+  }
+
+  leaveGame(){
+    const {onViewChanged, socket} = this.props
+    socket.emit('leave_game')
+    onViewChanged()
   }
 
   teamList(names, icon, score, color) {
@@ -43,8 +50,6 @@ export default class GameStatus extends Component {
   }
 
   render() {
-
-    const {onViewChanged} = this.props
     const {team1,icon1,score1,team2,icon2,score2} = this.state
     return (
       <div>
@@ -59,7 +64,7 @@ export default class GameStatus extends Component {
             <Button color="primary" >Randomize Teams</Button>
           </Grid>
           <Grid item xs={12}>
-            <Button color="primary" onClick={onViewChanged}>Leave</Button>
+            <Button color="primary" onClick={this.leaveGame}>Leave</Button>
           </Grid>
           <Grid item xs={12}>
             <Button color="primary" variant="contained">Start</Button>
@@ -71,6 +76,6 @@ export default class GameStatus extends Component {
 }
 
 GameStatus.propTypes = {
-  onViewChanged: PropTypes.func,
+  leaveGame: PropTypes.func,
   socket: PropTypes.any,
 }

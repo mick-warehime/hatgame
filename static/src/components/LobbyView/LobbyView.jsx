@@ -55,7 +55,8 @@ export default class LobbyView extends Component {
   }
 
   render() {
-    const {error} = this.state
+    const {player, room, error} = this.state
+    const not_ready = !player || !room
     return (
       <div className="lobby">
 
@@ -83,8 +84,8 @@ export default class LobbyView extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={3}>
-            <Button color="primary" onClick={this.joinGame}>Join</Button>
-            <Button color="primary" onClick={this.createGame}>Create</Button>
+            <Button color="primary" disabled={not_ready} onClick={this.joinGame}>Join</Button>
+            <Button color="primary" disabled={not_ready} onClick={this.createGame}>Create</Button>
           </Grid>
           <Typography color="secondary">{error}</Typography>
         </Grid>
