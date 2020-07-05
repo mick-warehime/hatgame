@@ -15,8 +15,10 @@ from app.model.fields import Namespaces
 
 logging.basicConfig(level=logging.INFO)
 
-app = Flask(__name__, static_folder='./static/dist',
-            template_folder='./static/dist', static_url_path='')
+app = Flask(__name__,
+            static_folder='./static/dist',
+            template_folder='./static/dist',
+            static_url_path='')
 socketio = SocketIO(app)
 CORS(app)
 
@@ -80,12 +82,14 @@ def update(score=0):
     random.shuffle(icons)
     icon1, icon2 = icons[0], icons[1]
     logging.info('GOT STATUS')
-    response = {"team1": ["chad", "bardasd", "thad"],
-                "icon1": icon1,
-                "score1": score,
-                "team2": ["brew", "drew", "agnew", "stu"],
-                "icon2": icon2,
-                "score2": 0}
+    response = {
+        "team1": ["chad", "bardasd", "thad"],
+        "icon1": icon1,
+        "score1": score,
+        "team2": ["brew", "drew", "agnew", "stu"],
+        "icon2": icon2,
+        "score2": 0
+    }
     logging.info(response)
     emit('update_status', response)
 

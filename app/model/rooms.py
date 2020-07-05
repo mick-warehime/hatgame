@@ -15,8 +15,7 @@ def game_room_exists(room_name: str) -> bool:
 
 def initialize_game_room(room_name: str,
                          first_player: str,
-                         icons: Tuple[str, str] = None
-                         ) -> None:
+                         icons: Tuple[str, str] = None) -> None:
     """Initialize a game room with the desired properties.
 
     The game's name must not already exist in the database.

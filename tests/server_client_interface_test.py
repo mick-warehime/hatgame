@@ -4,8 +4,8 @@ import random
 import pytest
 
 from app.app import create_game, randomize_room
-from app.controller.server_client_interface import join_game_action, \
-    create_test_game
+from app.controller.server_client_interface import (join_game_action,
+                                                    create_test_game)
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
                               TEST_GAME)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state

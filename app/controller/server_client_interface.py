@@ -67,7 +67,9 @@ def join_game_action(join_request: Dict[str, str]) -> Dict[str, Any]:
 
     # Emit new game state to all clients.
     try:
-        emit(fields.Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
+        emit(fields.Namespaces.ROOM_UPDATED.value,
+             asdict(room),
+             broadcast=True,
              namespace=Namespaces.ROOM_UPDATED.value)
     except RuntimeError:  # This occurs during tests.
         logging.log(logging.ERROR, 'Runtime error during emit.')
@@ -109,8 +111,10 @@ def create_game_action(game_request: Dict[str, str]) -> Dict[str, Any]:
 
     room_name = game_request[fields.ROOM_NAME]
     if game_room_exists(room_name):
-        return {fields.ERROR: (f'Game room with name ({room_name}) '
-                               f'already exists.')}
+        return {
+            fields.ERROR: (f'Game room with name ({room_name}) '
+                           f'already exists.')
+        }
 
     initialize_game_room(room_name, game_request[fields.PLAYER_NAME])
     return {fields.GAME_STATE: asdict(get_room_state(room_name))}
@@ -132,9 +136,10 @@ def create_test_game() -> None:
 
     # populate room with players
     room = get_room_state(room_name)
-    room = replace(room, **dict(
-        team_0_players=('Mick', 'Liz', 'M\'Lickz'),
-        team_1_players=('Dvir', 'Celeste', 'Boaz', 'Ronen')))
+    room = replace(
+        room,
+        **dict(team_0_players=('Mick', 'Liz', 'M\'Lickz'),
+               team_1_players=('Dvir', 'Celeste', 'Boaz', 'Ronen')))
     update_room(room_name, room)
 
 
@@ -166,12 +171,15 @@ def randomize_teams_action(request: Dict[str, Any]) -> Dict[str, str]:
     shuffle(players)
     team_0_players = players[:num_players // 2]
     team_1_players = players[num_players // 2:]
-    room = replace(room, **dict(team_1_players=team_1_players,
-                                team_0_players=team_0_players))
+    room = replace(
+        room,
+        **dict(team_1_players=team_1_players, team_0_players=team_0_players))
     update_room(room_name, room)
 
     try:
-        emit(Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
+        emit(Namespaces.ROOM_UPDATED.value,
+             asdict(room),
+             broadcast=True,
              namespace=Namespaces.ROOM_UPDATED.value)
     except RuntimeError:
         pass  # This happens during unit tests and I don't know how to fix it.
