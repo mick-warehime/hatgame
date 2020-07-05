@@ -2,13 +2,10 @@
 from dataclasses import asdict
 from typing import Dict, Any
 
-from flask import session
-from flask_socketio import join_room
-
 from app.actions.validation_utils import validate_fields
 from app.model import fields
 from app.model.rooms import (game_room_exists, get_room_state,
-                             initialize_game_room, update_room)
+                             initialize_game_room)
 
 
 def create_game(create_request: Dict[str, str]) -> Dict[str, Any]:
@@ -49,9 +46,4 @@ def create_game(create_request: Dict[str, str]) -> Dict[str, Any]:
                                f'already exists.')}
 
     initialize_game_room(room_name, create_request[fields.PLAYER_NAME])
-    session[fields.ROOM_NAME] = room_name
-    session[fields.PLAYER_NAME] = create_request[fields.PLAYER_NAME]
-    join_room(room_name)
-    room = get_room_state(room_name)
-    update_room(room_name, room)
     return {fields.GAME_STATE: asdict(get_room_state(room_name))}

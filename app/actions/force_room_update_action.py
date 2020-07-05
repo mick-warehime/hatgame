@@ -1,12 +1,15 @@
-from flask import session
+from flask_socketio import emit
 
-from app.model import fields
 from app.model.rooms import get_room_state
-from app.model.rooms import update_room
 
 
 # allows client code to force pull new data
-def force_room_update():
-    room_name = session[fields.ROOM_NAME]
+def force_room_update(room_name):
     room = get_room_state(room_name)
-    update_room(room_name, room)
+    update_message = {"team1": room.team_1_players,
+                      "icon1": room.team_1_icon,
+                      "score1": room.team_1_score,
+                      "team2": room.team_2_players,
+                      "icon2": room.team_2_icon,
+                      "score2": room.team_2_score}
+    emit('update_room', update_message, room=room_name)
