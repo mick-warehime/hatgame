@@ -25,4 +25,4 @@ def create_test_game() -> None:
     room = replace(room, **dict(
         team_1_players=('Mick', 'Liz', 'M\'Lickz'),
         team_2_players=('Dvir', 'Celeste', 'Boaz', 'Ronen')))
-    update_room(room_name, room)
+    update_room(room_name, room, push_update=False)

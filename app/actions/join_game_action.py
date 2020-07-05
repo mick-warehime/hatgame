@@ -1,12 +1,12 @@
 """Implementation of server request/repsonse logic."""
-from dataclasses import asdict, replace
+from dataclasses import replace
 from typing import Dict, Any
 
-from flask_socketio import emit
+from flask import session
+from flask_socketio import join_room
 
 from app.actions.validation_utils import validate_fields
 from app.model import fields
-from app.model.fields import Namespaces
 from app.model.rooms import (game_room_exists, get_room_state, update_room)
 
 
@@ -59,11 +59,8 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     else:
         players = room.team_1_players + (player_name,)
         room = replace(room, **dict(team_1_players=players))
-
+    session[fields.ROOM_NAME] = room_name
+    session[fields.PLAYER_NAME] = join_request[fields.PLAYER_NAME]
+    join_room(room_name)
     update_room(room_name, room)
-
-    # Emit new game state to all clients.
-    emit(fields.Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
-         namespace=Namespaces.ROOM_UPDATED.value)
-
     return {}

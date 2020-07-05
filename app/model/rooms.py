@@ -2,6 +2,8 @@
 import random
 from typing import Dict, Tuple
 
+from flask_socketio import emit
+
 from app.icons import ICONS
 from app.model.room import Room
 
@@ -39,17 +41,31 @@ def initialize_game_room(room_name: str,
                                  icons[0], (), 0, icons[1])
 
 
-def update_room(room_name: str, data: Room) -> None:
+def update_room(room_name: str, data: Room, push_update=True) -> None:
     """Update specific room fields."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
 
     _room_dict[room_name] = data
+    if push_update:
+        _broadcast_update(room_name)
 
 
 def get_room_state(room_name: str) -> Room:
     """Get all game state data for a given room."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
     return _room_dict[room_name]
+
+
+def _broadcast_update(room_name) -> None:
+    data = _room_dict[room_name]
+
+    update_message = {"team1": data.team_1_players,
+                      "icon1": data.team_1_icon,
+                      "score1": data.team_1_score,
+                      "team2": data.team_2_players,
+                      "icon2": data.team_2_icon,
+                      "score2": data.team_2_score}
+    emit('update_room', update_message, room=room_name)
 
 
 def clear_rooms() -> None:

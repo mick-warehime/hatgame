@@ -98,7 +98,7 @@ def test_create_then_join_one_player_per_team(setup, test_app):
     assert player2 in room.team_2_players
 
 
-def test_join_room_same_player_name(setup):
+def test_join_room_same_player_name(setup, test_app):
     room_name = 'room'
     player = 'Mick'
     request = {PLAYER_NAME: player, ROOM_NAME: room_name}
