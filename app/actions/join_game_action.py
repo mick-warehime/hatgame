@@ -3,6 +3,7 @@ from typing import Dict, Any
 
 from app.actions.validation_utils import validate_fields
 from app.model import fields
+from app.model.data_structures import build_player
 from app.model.rooms import (game_room_exists, get_room_state, update_room)
 
 
@@ -37,17 +38,17 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     if not game_room_exists(room_name):
         return {fields.ERROR: f'Room {room_name} does not exist.'}
 
-    # Get current teams and check player name not already in use
+    # Get current teams and check build_player name not already in use
     room = get_room_state(room_name)
 
     player_name = join_request[fields.PLAYER_NAME]
-    if player_name in room.team_1_players or player_name in room.team_2_players:
+    if any(plyr.name == player_name for plyr in room.all_players()):
         return {fields.ERROR: f'Player \'{player_name}\' already in game.'}
 
     # Add player to team with fewest members.
     if len(room.team_1_players) > len(room.team_2_players):
-        room.team_2_players.append(player_name)
+        room.team_2_players.append(build_player(player_name))
     else:
-        room.team_1_players.append(player_name)
+        room.team_1_players.append(build_player(player_name))
     update_room(room_name, room)
     return {}
