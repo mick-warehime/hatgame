@@ -35,8 +35,8 @@ def initialize_game_room(room_name: str,
     if icons is None:
         icons = random.sample(ICONS, 2)
 
-    _room_dict[room_name] = Room(room_name, (first_player,), 0,
-                                 icons[0], (), 0, icons[1])
+    _room_dict[room_name] = Room(room_name, [first_player], 0,
+                                 icons[0], [], 0, icons[1])
 
 
 def update_room(room_name: str, data: Room) -> None:
@@ -50,6 +50,15 @@ def get_room_state(room_name: str) -> Room:
     """Get all game state data for a given room."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
     return _room_dict[room_name]
+
+
+def remove_player(player_name: str, room_name: str) -> None:
+    room = get_room_state(room_name)
+    if player_name in room.team_1_players:
+        room.team_1_players.remove(player_name)
+    elif player_name in room.team_2_players:
+        room.team_2_players.remove(player_name)
+    update_room(room_name, room)
 
 
 def clear_rooms() -> None:

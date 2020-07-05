@@ -1,5 +1,4 @@
 """Implementation of server request/repsonse logic."""
-from dataclasses import replace
 from typing import Dict, Any
 
 from app.actions.validation_utils import validate_fields
@@ -37,7 +36,6 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
         return {fields.ERROR: error}
 
     room_name = join_request[fields.ROOM_NAME]
-    print(f"room: {room_name}")
     if not game_room_exists(room_name):
         return {fields.ERROR: f'Room {room_name} does not exist.'}
 
@@ -45,16 +43,13 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     room = get_room_state(room_name)
 
     player_name = join_request[fields.PLAYER_NAME]
-    if player_name in room.team_1_players + room.team_2_players:
+    if player_name in room.team_1_players or player_name in room.team_2_players:
         return {fields.ERROR: f'Player \'{player_name}\' already in game.'}
 
     # Add player to team with fewest members.
     if len(room.team_1_players) > len(room.team_2_players):
-        players = room.team_1_players + (player_name,)
-        room = replace(room, **dict(team_2_players=players))
-
+        room.team_2_players.append(player_name)
     else:
-        players = room.team_1_players + (player_name,)
-        room = replace(room, **dict(team_1_players=players))
+        room.team_1_players.append(player_name)
     update_room(room_name, room)
     return {}

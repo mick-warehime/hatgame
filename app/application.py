@@ -5,11 +5,12 @@ from typing import Dict, Any
 
 from flask import render_template
 from flask import session
-from flask_socketio import join_room
+from flask_socketio import join_room, leave_room
 
 from app.actions import create_game_action
 from app.actions import force_room_update_action
 from app.actions import join_game_action
+from app.actions import leave_game_action
 from app.common.timer import timer
 from app.initialization import create_app
 from app.model.fields import Namespaces, ROOM_NAME, PLAYER_NAME, ERROR
@@ -70,6 +71,22 @@ def initialize_session(player_name, room_name):
     session[ROOM_NAME] = room_name
     session[PLAYER_NAME] = player_name
     join_room(room_name)
+
+
+@socketio.on("disconnect", namespace='/')
+def disconnect():
+    leave_game()
+
+
+@socketio.on("leave_game", namespace='/')
+def leave_game():
+    if ROOM_NAME not in session:
+        return
+    room_name = session[ROOM_NAME]
+    player_name = session[PLAYER_NAME]
+    leave_game_action.leave_game(player_name, room_name)
+    force_room_update_action.force_room_update(room_name)
+    leave_room(room_name)
 
 
 if __name__ == '__main__':
