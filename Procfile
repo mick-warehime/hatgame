@@ -1,1 +1,1 @@
-web: gunicorn --chdir app --worker-class eventlet -w 1 -b 0.0.0.0:$PORT app:app
+web: gunicorn --chdir app --worker-class eventlet -w 1 -b 0.0.0.0:$PORT application:app
