@@ -11,9 +11,7 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
 
     If the game room exists and the player name is not already in use, then
     the player is added to the game room. This is done by updating the game
-    state in that room and broadcasting the new state to all clients (
-    namespace 'player_joined'). The player is added to the team with fewest
-    players.
+    state in that room. The player is added to the team with fewest players.
 
     If the game room does not exist an error message is returned.
     If the player name is already taken an error message is returned.
