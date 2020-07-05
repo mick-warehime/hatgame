@@ -5,7 +5,7 @@ ERROR = 'error'
 ROOM_NAME = 'room'
 PLAYER_NAME = 'player'
 GAME_STATE = 'game_state'
-TEST_GAME = 'test_game'
+TEST_GAME = 'asdf'
 
 
 # Enumeration of all namespaces used with socketio.

@@ -35,12 +35,11 @@ export default class LobbyView extends Component {
   handleResponse(resp){
     if (resp.error){
         this.setState({error:resp.error})
-    } else {
-        this.setState({error:''})
+        this.forceUpdate()
+        return
     }
-    //     const {onViewChanged} = this.props
-    this.forceUpdate()
-    //     const {onViewChanged} = this.props
+    const {onViewChanged} = this.props
+    onViewChanged()
   }
 
   updatePlayer(e) {

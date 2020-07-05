@@ -1,15 +1,14 @@
 import logging
 import os
 import random
-import time
 from typing import Dict, Any
 
 from flask import render_template
-from flask_socketio import emit
 
 from app.actions import create_game_action
 from app.actions import join_game_action
-from app.icons import ICONS
+from app.common.timer import timer
+from app.common.update import update
 from app.initialization import create_app
 from app.model.fields import Namespaces
 from app.test_game import create_test_game
@@ -43,15 +42,6 @@ def toggle_timer(request):
     timer(request['duration'])
 
 
-def timer(duration):
-    count = 0
-    while count < duration:
-        time.sleep(1)
-        emit('increment_timer')
-        logging.info('increment timer')
-        count += 1
-
-
 @socketio.on("get_status", namespace='/')
 def get_status():
     update()
@@ -65,21 +55,6 @@ def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
 @socketio.on(Namespaces.JOIN_GAME.value)
 def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     return join_game_action.join_game(join_request)
-
-
-def update(score=0):
-    icons = ICONS.copy()
-    random.shuffle(icons)
-    icon1, icon2 = icons[0], icons[1]
-    logging.info('GOT STATUS')
-    response = {"team1": ["chad", "bardasd", "thad"],
-                "icon1": icon1,
-                "score1": score,
-                "team2": ["brew", "drew", "agnew", "stu"],
-                "icon2": icon2,
-                "score2": 0}
-    logging.info(response)
-    emit('update_status', response)
 
 
 if __name__ == '__main__':

@@ -1,9 +1,8 @@
 """Implementation of server request/repsonse logic."""
-import logging
 from dataclasses import asdict
 from typing import Dict, Any
 
-from app.app_utils import validate_fields
+from app.actions.validation_utils import validate_fields
 from app.model import fields
 from app.model.rooms import (game_room_exists, get_room_state,
                              initialize_game_room)
@@ -48,4 +47,3 @@ def create_game(game_request: Dict[str, str]) -> Dict[str, Any]:
 
     initialize_game_room(room_name, game_request[fields.PLAYER_NAME])
     return {fields.GAME_STATE: asdict(get_room_state(room_name))}
-
