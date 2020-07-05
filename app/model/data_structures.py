@@ -2,11 +2,12 @@
 
 The implementation is hidden from app.py.
 """
-from dataclasses import dataclass
 from typing import List
 
+from attr import dataclass
 
-@dataclass()
+
+@dataclass
 class Room:
     name: str  # Label for the current game instance
     team_1_players: List[str]

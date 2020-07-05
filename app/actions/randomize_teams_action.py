@@ -1,6 +1,7 @@
-from dataclasses import replace
 from random import shuffle
 from typing import Dict, Any
+
+from attr import evolve
 
 from app.actions.validation_utils import validate_fields
 from app.model import fields
@@ -32,7 +33,7 @@ def randomize_teams(request: Dict[str, Any]) -> Dict[str, str]:
     shuffle(players)
     team_2_players = players[:num_players // 2]
     team_1_players = players[num_players // 2:]
-    room = replace(
+    room = evolve(
         room,
         **dict(team_1_players=team_1_players, team_2_players=team_2_players))
     update_room(room_name, room)

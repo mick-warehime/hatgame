@@ -1,6 +1,7 @@
 """Implementation of server request/repsonse logic."""
-from dataclasses import asdict
 from typing import Dict, Any
+
+from attr import asdict
 
 from app.actions.validation_utils import validate_fields
 from app.model import fields
