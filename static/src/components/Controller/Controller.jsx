@@ -32,7 +32,7 @@ export default class Controller extends Component {
     const {view} = this.state;
     switch (view) {
     case Views.LOBBY:
-      return <LobbyView onViewChanged={this.onViewChanged}/>;
+      return <LobbyView onViewChanged={this.onViewChanged} socket={socket}/>;
     case Views.GAME:
       return  <GameView onViewChanged={this.onViewChanged} socket={socket}/>;
     default:
