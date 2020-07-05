@@ -16,7 +16,7 @@ export default class AudienceView extends Component {
   }
 
   render() {
-    const {boardViewChanged} = this.props;
+    const {changeGameViewTo} = this.props;
     const message = ["Waiting for 4 players."]
     return (
       <div>
@@ -34,7 +34,7 @@ export default class AudienceView extends Component {
             <Typography color="primary" style={{ fontSize: 45 }}>43 s</Typography>
           </Grid>
         </Grid>
-        <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.ACTIVE_PLAYER)}>ACTIVE_PLAYER</Button>
+        <Button variant="outlined" color="secondary" onClick={() => changeGameViewTo(Views.ACTIVE_PLAYER)}>ACTIVE_PLAYER</Button>
       </div>
     )
   }
@@ -42,5 +42,5 @@ export default class AudienceView extends Component {
 
 AudienceView.propTypes = {
   socket: PropTypes.any,
-  boardViewChanged: PropTypes.func,
+  changeGameViewTo: PropTypes.func,
 }

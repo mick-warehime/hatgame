@@ -7,6 +7,7 @@ import { InputLabel } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Views } from '../../utils/constants';
 
 
 export default class LobbyView extends Component {
@@ -38,8 +39,8 @@ export default class LobbyView extends Component {
         this.forceUpdate()
         return
     }
-    const {onViewChanged} = this.props
-    onViewChanged()
+    const {changeViewTo} = this.props
+    changeViewTo(Views.GAME)
   }
 
   updatePlayer(e) {
@@ -95,6 +96,6 @@ export default class LobbyView extends Component {
 }
 
 LobbyView.propTypes = {
-  onViewChanged: PropTypes.func,
+  changeViewTo: PropTypes.func,
   socket: PropTypes.any,
 }

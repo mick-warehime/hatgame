@@ -16,7 +16,7 @@ export default class SummaryView extends Component {
   }
 
   render() {
-    const {boardViewChanged} = this.props;
+    const {changeGameViewTo} = this.props;
     const summary = ["Dvir scored 0 points!"];
     const next = "millard";
     return (
@@ -36,7 +36,7 @@ export default class SummaryView extends Component {
             <Typography  style={{ fontSize: 25 }}>{next} is next!</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.AUDIENCE)}>Start Round!</Button>
+            <Button variant="outlined" color="secondary" onClick={() => changeGameViewTo(Views.AUDIENCE)}>Start Round!</Button>
           </Grid>
         </Grid>
       </div>
@@ -46,5 +46,5 @@ export default class SummaryView extends Component {
 
 SummaryView.propTypes = {
   socket: PropTypes.any,
-  boardViewChanged: PropTypes.func,
+  changeGameViewTo: PropTypes.func,
 }

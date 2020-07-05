@@ -11,10 +11,10 @@ export default class GameBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {view: Views.PHRASE}
-    this.boardViewChanged = this.boardViewChanged.bind(this)
+    this.changeGameViewTo = this.changeGameViewTo.bind(this)
   }
 
-  boardViewChanged(newView) {
+  changeGameViewTo(newView) {
     this.setState({view: newView})
   }
 
@@ -23,15 +23,15 @@ export default class GameBoard extends Component {
     const {view} = this.state;
     switch (view) {
     case Views.ACTIVE_PLAYER:
-      return <ActivePlayerView boardViewChanged={this.boardViewChanged} socket={socket}/>;
+      return <ActivePlayerView changeGameViewTo={this.changeGameViewTo} socket={socket}/>;
     case Views.AUDIENCE:
-      return  <AudienceView boardViewChanged={this.boardViewChanged} socket={socket}/>;
+      return  <AudienceView changeGameViewTo={this.changeGameViewTo} socket={socket}/>;
     case Views.PHRASE:
-      return  <PhraseView boardViewChanged={this.boardViewChanged} socket={socket}/>;
+      return  <PhraseView changeGameViewTo={this.changeGameViewTo} socket={socket}/>;
     case Views.SUMMARY:
-      return  <SummaryView boardViewChanged={this.boardViewChanged} socket={socket}/>;
+      return  <SummaryView changeGameViewTo={this.changeGameViewTo} socket={socket}/>;
     case Views.TEST:
-      return  <TestView boardViewChanged={this.boardViewChanged} socket={socket}/>;
+      return  <TestView changeGameViewTo={this.changeGameViewTo} socket={socket}/>;
     default:
       return (
         <div>
@@ -43,6 +43,5 @@ export default class GameBoard extends Component {
 }
 
 GameBoard.propTypes = {
-  onViewChanged: PropTypes.func,
   socket: PropTypes.any,
 }
