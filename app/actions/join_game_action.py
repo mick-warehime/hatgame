@@ -38,7 +38,7 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     if not game_room_exists(room_name):
         return {fields.ERROR: f'Room {room_name} does not exist.'}
 
-    # Get current teams and check build_player name not already in use
+    # Get current teams and check player name not already in use
     room = get_room_state(room_name)
 
     player_name = join_request[fields.PLAYER_NAME]
