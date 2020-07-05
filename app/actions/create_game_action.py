@@ -42,8 +42,10 @@ def create_game(create_request: Dict[str, str]) -> Dict[str, Any]:
 
     room_name = create_request[fields.ROOM_NAME]
     if game_room_exists(room_name):
-        return {fields.ERROR: (f'Game room with name ({room_name}) '
-                               f'already exists.')}
+        return {
+            fields.ERROR: (f'Game room with name ({room_name}) '
+                           f'already exists.')
+        }
 
     initialize_game_room(room_name, create_request[fields.PLAYER_NAME])
     return {fields.GAME_STATE: asdict(get_room_state(room_name))}

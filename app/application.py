@@ -53,7 +53,8 @@ def force_room_update():
 def create_game(create_request: Dict[str, str]) -> Dict[str, Any]:
     resp = create_game_action.create_game(create_request)
     if ERROR not in resp:
-        initialize_session(create_request[PLAYER_NAME], create_request[ROOM_NAME])
+        initialize_session(create_request[PLAYER_NAME],
+                           create_request[ROOM_NAME])
         force_room_update_action.force_room_update(create_request[ROOM_NAME])
     return resp
 
