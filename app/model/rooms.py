@@ -3,9 +3,9 @@ import random
 from typing import Dict, Tuple
 
 from app.icons import ICONS
-from app.model.game_state import GameState
+from app.model.room import Room
 
-_room_dict: Dict[str, GameState] = {}
+_room_dict: Dict[str, Room] = {}
 
 
 def game_room_exists(room_name: str) -> bool:
@@ -35,18 +35,18 @@ def initialize_game_room(room_name: str,
     if icons is None:
         icons = random.sample(ICONS, 2)
 
-    _room_dict[room_name] = GameState(room_name, (first_player,), 'Team 1', 0,
-                                      icons[0], (), 'Team 2', 0, icons[1])
+    _room_dict[room_name] = Room(room_name, (first_player,), 0,
+                                 icons[0], (), 0, icons[1])
 
 
-def update_room(room_name: str, data: GameState) -> None:
+def update_room(room_name: str, data: Room) -> None:
     """Update specific room fields."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
 
     _room_dict[room_name] = data
 
 
-def get_room_state(room_name: str) -> GameState:
+def get_room_state(room_name: str) -> Room:
     """Get all game state data for a given room."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
     return _room_dict[room_name]

@@ -62,19 +62,19 @@ export default class PhraseView extends Component {
           <Grid item xs={9}>
             <FormControl>
               <InputLabel htmlFor="phrase1-input">phrase</InputLabel>
-              <Input id="phrase1-input" onChange={e => this.setPhrase(0, e)}/>
+              <Input id="phrase1-input" disabled={ready} onChange={e => this.setPhrase(0, e)}/>
             </FormControl>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
               <InputLabel htmlFor="phrase2-input">phrase</InputLabel>
-              <Input id="phrase2-input" onChange={e => this.setPhrase(1, e)} />
+              <Input id="phrase2-input" disabled={ready} onChange={e => this.setPhrase(1, e)} />
             </FormControl>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
               <InputLabel htmlFor="phrase3-input">phrase</InputLabel>
-              <Input id="phrase3-input" onChange={e => this.setPhrase(2, e)}/>
+              <Input id="phrase3-input" disabled={ready} onChange={e => this.setPhrase(2, e)}/>
             </FormControl>
           </Grid>
           <Grid item xs={3}>

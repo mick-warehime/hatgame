@@ -14,16 +14,16 @@ export default class GameStatus extends Component {
     this.state = { team1: [], score1: 0, icon1: "",
       team2: [], score2: 0, icon2: ""};
     this.teamList = this.teamList.bind(this)
-    this.updateStatus = this.updateStatus.bind(this)
+    this.updateRoom = this.updateRoom.bind(this)
   }
 
   componentDidMount () {
     const {socket} = this.props
-    socket.on('update_status', (response) => {this.updateStatus(response);});
-    socket.emit('get_status');
+    socket.on('update_room', (response) => {this.updateRoom(response);});
+    socket.emit('force_room_update');
   }
 
-  updateStatus(resp) {
+  updateRoom(resp) {
     this.setState({team1: resp["team1"], score1:resp["score1"], icon1:resp["icon1"],
       team2: resp["team2"], score2:resp["score2"], icon2:resp["icon2"]})
     this.forceUpdate();

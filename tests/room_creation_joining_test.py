@@ -1,13 +1,11 @@
 """Tests of game creation / joining API"""
-import os
 
 import pytest
 
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
-from app.app import create_app
-from app.model.fields import (PLAYER_NAME, ROOM_NAME, ERROR, GAME_STATE,
-                              TEST_GAME)
+from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
+                              TEST_GAME, ERROR)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state
 from app.test_game import create_test_game
 
@@ -19,23 +17,13 @@ def setup():
     yield None
 
 
-@pytest.fixture
-def test_app(request):
-    # create the app in test mode
-    os.environ["FLASK_CONFIG"] = "testing"
-    app, socketio = create_app()
-
-    with app.app_context():
-        yield app, socketio
-
-
 def test_room_created():
     create_test_game()
     assert game_room_exists(TEST_GAME)
 
     room = get_room_state(TEST_GAME)
-    assert 'Mick' in room.team_0_players
-    assert 'Dvir' in room.team_1_players
+    assert 'Mick' in room.team_1_players
+    assert 'Dvir' in room.team_2_players
 
 
 def test_add_valid_game_room_creates_room(setup):
@@ -46,7 +34,7 @@ def test_add_valid_game_room_creates_room(setup):
     result = create_game(request)
 
     assert game_room_exists(room_name)
-    assert player in result[GAME_STATE]['team_0_players']
+    assert player in result[GAME_STATE]['team_1_players']
 
 
 def test_add_already_existing_game_room_gives_error(setup):
@@ -81,7 +69,7 @@ def test_create_game_missing_or_empty_data(setup, field, empty_data):
         assert 'missing field' in result[ERROR]
 
 
-def test_create_then_join_one_player_per_team(setup, test_app):
+def test_create_then_join_one_player_per_team(setup):
     room_name = 'room'
     player = 'Mick'
     request = {PLAYER_NAME: player, ROOM_NAME: room_name}
@@ -94,8 +82,8 @@ def test_create_then_join_one_player_per_team(setup, test_app):
     assert ERROR not in result
 
     room = get_room_state(room_name)
-    assert player in room.team_0_players
-    assert player2 in room.team_1_players
+    assert player in room.team_1_players
+    assert player2 in room.team_2_players
 
 
 def test_join_room_same_player_name(setup):

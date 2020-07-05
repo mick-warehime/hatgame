@@ -1,13 +1,9 @@
 """Implementation of server request/repsonse logic."""
-import logging
-from dataclasses import asdict, replace
+from dataclasses import replace
 from typing import Dict, Any
 
-from flask_socketio import emit
-
-from app.app_utils import validate_fields
+from app.actions.validation_utils import validate_fields
 from app.model import fields
-from app.model.fields import Namespaces
 from app.model.rooms import (game_room_exists, get_room_state, update_room)
 
 
@@ -49,22 +45,16 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     room = get_room_state(room_name)
 
     player_name = join_request[fields.PLAYER_NAME]
-    if player_name in room.team_0_players or player_name in room.team_1_players:
+    if player_name in room.team_1_players + room.team_2_players:
         return {fields.ERROR: f'Player \'{player_name}\' already in game.'}
 
     # Add player to team with fewest members.
-    if len(room.team_0_players) > len(room.team_1_players):
+    if len(room.team_1_players) > len(room.team_2_players):
         players = room.team_1_players + (player_name,)
-        room = replace(room, **dict(team_1_players=players))
+        room = replace(room, **dict(team_2_players=players))
 
     else:
-        players = room.team_0_players + (player_name,)
-        room = replace(room, **dict(team_0_players=players))
-
+        players = room.team_1_players + (player_name,)
+        room = replace(room, **dict(team_1_players=players))
     update_room(room_name, room)
-
-    # Emit new game state to all clients.
-    emit(fields.Namespaces.ROOM_UPDATED.value, asdict(room), broadcast=True,
-         namespace=Namespaces.ROOM_UPDATED.value)
-
     return {}

@@ -7,13 +7,11 @@ from typing import Tuple
 
 
 @dataclass(frozen=True)
-class GameState:
+class Room:
     name: str  # Label for the current game instance
-    team_0_players: Tuple[str, ...]
-    team_0_name: str
-    team_0_score: int
-    team_0_icon: str
     team_1_players: Tuple[str, ...]
-    team_1_name: str
     team_1_score: int
     team_1_icon: str
+    team_2_players: Tuple[str, ...]
+    team_2_score: int
+    team_2_icon: str
