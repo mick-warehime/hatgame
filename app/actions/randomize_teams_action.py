@@ -7,7 +7,7 @@ from app.model import fields
 from app.model.rooms import game_room_exists, get_room_state, update_room
 
 
-def randomize_teams(request: Dict[str, Any]) -> Dict[str, str]:
+def randomize_teams(room_name: str) -> Dict[str, str]:
     """Randomize the teams in a given room.
 
     If the room specified for randomization exists, the teams are randomized.
@@ -15,14 +15,8 @@ def randomize_teams(request: Dict[str, Any]) -> Dict[str, str]:
     If the room does not exist or is not specified, a response message with an
     'error' field is returned.
     Args:
-        request: Request message with a 'room name' field specifying the room.
+        room_name: the room to randomize.
     """
-
-    error = validate_fields(request, (fields.ROOM_NAME,))
-    if error:
-        return {fields.ERROR: error}
-
-    room_name = request[fields.ROOM_NAME]
     if not game_room_exists(room_name):
         return {fields.ERROR: f'Room named {room_name} does not exist.'}
 

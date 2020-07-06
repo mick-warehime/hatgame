@@ -17,6 +17,7 @@ export default class GameStatus extends Component {
     this.teamList = this.teamList.bind(this)
     this.updateRoom = this.updateRoom.bind(this)
     this.leaveGame = this.leaveGame.bind(this)
+    this.randomizeTeams = this.randomizeTeams.bind(this)
   }
 
   componentDidMount () {
@@ -35,6 +36,11 @@ export default class GameStatus extends Component {
     const {changeViewTo, socket} = this.props
     socket.emit('leave_game')
     changeViewTo(Views.LOBBY)
+  }
+
+  randomizeTeams() {
+  const {changeViewTo, socket} = this.props
+    socket.emit('randomize_room')
   }
 
   teamList(names, icon, score, color) {
@@ -62,7 +68,7 @@ export default class GameStatus extends Component {
             {this.teamList(team2, icon2, score2, "secondary")}
           </Grid>
           <Grid item xs={12}>
-            <Button color="primary" >Randomize Teams</Button>
+            <Button color="primary" onClick={this.randomizeTeams}>Randomize Teams</Button>
           </Grid>
           <Grid item xs={12}>
             <Button color="primary" onClick={this.leaveGame}>Leave</Button>

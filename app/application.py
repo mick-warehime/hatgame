@@ -69,10 +69,11 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
 
 
 @socketio.on(Namespaces.RANDOMIZE_ROOM.value)
-def randomize_room(rand_request: Dict[str, str]) -> Dict[str, Any]:
-    resp = randomize_teams_action.randomize_teams(rand_request)
+def randomize_room() -> Dict[str, Any]:
+    room_name = session[ROOM_NAME]
+    resp = randomize_teams_action.randomize_teams(room_name)
     if ERROR not in resp:
-        force_room_update_action.force_room_update(rand_request[ROOM_NAME])
+        force_room_update_action.force_room_update(room_name)
     return resp
 
 

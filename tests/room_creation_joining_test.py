@@ -34,9 +34,9 @@ def test_randomize_room():
     room = get_room_state(TEST_GAME)
     team_2 = room.team_2_players
     team_1 = room.team_1_players
-    random.seed(11)  # for determinism. There is a small chance the room will
-    # remain unchanged
-    randomize_teams({ROOM_NAME: TEST_GAME})
+    # Using a seed here ensures the teams will change.
+    random.seed(11)
+    randomize_teams(TEST_GAME)
 
     room = get_room_state(TEST_GAME)
     assert team_2 != room.team_2_players
