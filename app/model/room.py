@@ -2,26 +2,12 @@
 
 The implementation is hidden from app.py.
 """
-from functools import reduce
 from itertools import chain
-from typing import List, Iterable, Set
+from typing import List, Iterable
 
 from attr import dataclass
 
-
-@dataclass
-class Player:
-    """Represents a build_player in a game room"""
-    name: str
-    ready: bool
-    phrases: List[str]
-
-
-def build_player(name: str,
-                 ready: bool = False,
-                 phrases: Iterable[str] = ()) -> Player:
-    """Builder function for Player objects"""
-    return Player(name, ready, list(phrases))
+from app.model.player import Player
 
 
 @dataclass
@@ -37,6 +23,5 @@ class Room:
     def all_players(self) -> Iterable[Player]:
         return chain(self.team_1_players, self.team_2_players)
 
-    def all_phrases(self) -> Set[str]:
-        return reduce(set.union, (set(p.phrases) for p in self.all_players()),
-                      set())
+    def all_phrases(self) -> List[str]:
+        return [p for player in self.all_players() for p in player.phrases]

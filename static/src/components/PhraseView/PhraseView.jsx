@@ -27,6 +27,8 @@ export default class PhraseView extends Component {
     console.log("submitted phrases")
     const {ready, phrases} = this.state
     this.setState({ready: !ready, phrases:phrases})
+    const {socket} = this.props;
+    socket.emit('submit_phrases', {phrases:phrases})
   }
 
   setPhrase(index, event){

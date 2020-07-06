@@ -18,6 +18,7 @@ export default class GameStatus extends Component {
     this.updateRoom = this.updateRoom.bind(this)
     this.leaveGame = this.leaveGame.bind(this)
     this.randomizeTeams = this.randomizeTeams.bind(this)
+    this.phraseList = this.phraseList.bind(this)
   }
 
   componentDidMount () {
@@ -28,7 +29,7 @@ export default class GameStatus extends Component {
 
   updateRoom(resp) {
     this.setState({team1: resp["team1"], score1:resp["score1"], icon1:resp["icon1"],
-      team2: resp["team2"], score2:resp["score2"], icon2:resp["icon2"]})
+      team2: resp["team2"], score2:resp["score2"], icon2:resp["icon2"], phrases:resp["phrases"]})
     this.forceUpdate();
   }
 
@@ -56,8 +57,19 @@ export default class GameStatus extends Component {
     </List>);
   }
 
+  phraseList(phrases) {
+    if (!phrases){
+    return <div></div>
+    }
+    return (<List dense={true}>
+      {phrases.map((phrase) => (<ListItem key={phrase} divider={true}><ListItemText primary={phrase}/> </ListItem>))}
+    </List>);
+  }
+
   render() {
-    const {team1,icon1,score1,team2,icon2,score2} = this.state
+    const {team1,icon1,score1} = this.state
+    const {team2,icon2,score2} = this.state
+    const {phrases} = this.state
     return (
       <div>
         <Grid container spacing={0}>
@@ -77,6 +89,7 @@ export default class GameStatus extends Component {
             <Button color="primary" variant="contained">Start</Button>
           </Grid>
         </Grid>
+        {this.phraseList(phrases)}
       </div>
     )
   }
