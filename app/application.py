@@ -7,11 +7,13 @@ from flask import render_template
 from flask import session
 from flask_socketio import join_room, leave_room
 
-from app.actions import create_game_action, randomize_teams_action, \
-    submit_phrases_action
+from app.actions import create_game_action
 from app.actions import force_room_update_action
 from app.actions import join_game_action
 from app.actions import leave_game_action
+from app.actions import randomize_teams_action
+from app.actions import submit_phrases_action
+from app.actions import unready_phrases_action
 from app.common.timer import timer
 from app.initialization import create_app
 from app.model.fields import Namespaces, ROOM_NAME, PLAYER_NAME, ERROR
@@ -86,6 +88,14 @@ def submit_phrases(submit_request: Dict[str, Any]) -> Dict[str, Any]:
     if ERROR not in resp:  # update because player is now ready.
         force_room_update_action.force_room_update(room_name)
     return resp
+
+
+@socketio.on("unready_phrases")
+def unready_phrases() -> None:
+    room_name = session[ROOM_NAME]
+    player_name = session[PLAYER_NAME]
+    unready_phrases_action.unready_phrases(room_name, player_name)
+    force_room_update_action.force_room_update(room_name)
 
 
 def initialize_session(player_name: str, room_name: str) -> None:

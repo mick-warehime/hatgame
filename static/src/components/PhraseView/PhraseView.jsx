@@ -26,17 +26,20 @@ export default class PhraseView extends Component {
   //
     console.log("submitted phrases")
     const {ready, phrases} = this.state
-    this.setState({ready: !ready, phrases:phrases})
     const {socket} = this.props;
-    socket.emit('submit_phrases', {phrases:phrases})
+    if (!ready){
+        socket.emit('submit_phrases', {phrases:phrases})
+    } else {
+        socket.emit('unready_phrases')
+    }
+    this.setState({ready: !ready, phrases:phrases})
   }
 
   setPhrase(index, event){
     var {phrases, ready} = this.state
     phrases[index] = event.target.value
     this.setState({ready: ready, phrases: phrases})
-    console.log(this.state)
-  }
+    }
 
   render() {
     const {changeGameViewTo} = this.props;
