@@ -84,7 +84,8 @@ def randomize_room() -> Dict[str, Any]:
 def submit_phrases(submit_request: Dict[str, Any]) -> Dict[str, Any]:
     room_name = session[ROOM_NAME]
     player_name = session[PLAYER_NAME]
-    resp = submit_phrases_action.submit_phrases(room_name, player_name, submit_request)
+    resp = submit_phrases_action.submit_phrases(room_name, player_name,
+                                                submit_request)
     if ERROR not in resp:  # update because player is now ready.
         force_room_update_action.force_room_update(room_name)
     return resp

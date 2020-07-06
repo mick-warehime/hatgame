@@ -6,7 +6,8 @@ from app.model.player import build_player
 from app.model.rooms import get_room_state
 
 
-def submit_phrases(room_name, player_name, submit_request: Dict[str, Any]) -> Dict[str, Any]:
+def submit_phrases(room_name, player_name,
+                   submit_request: Dict[str, Any]) -> Dict[str, Any]:
     """Record phrases for a player and mark them as ready.
 
     If the submit request has a valid room, player name, and phrases, update
