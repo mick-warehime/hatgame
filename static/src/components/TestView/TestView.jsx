@@ -37,14 +37,14 @@ export default class TestView extends Component {
 
   render() {
     const {counter, timer} = this.state;
-    const {boardViewChanged} = this.props;
+    const {changeGameViewTo} = this.props;
     return (
       <div>
         <h1>Count: {counter}</h1>
         <Button variant="outlined" color="secondary" onClick={this.addRandom}>Add Something!</Button>
         <h1>Time: {timer}s</h1>
         <Button variant="outlined" color="secondary" onClick={this.startTimer}>Toggle Timer</Button>
-        <Button variant="outlined" color="secondary" onClick={() => boardViewChanged(Views.PHRASE)}>PHRASE</Button>
+        <Button variant="outlined" color="secondary" onClick={() => changeGameViewTo(Views.PHRASE)}>PHRASE</Button>
       </div>
     )
   }
@@ -52,5 +52,5 @@ export default class TestView extends Component {
 
 TestView.propTypes = {
   socket: PropTypes.any,
-  boardViewChanged: PropTypes.func,
+  changeGameViewTo: PropTypes.func,
 }

@@ -7,6 +7,7 @@ import { ListItem } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Views } from '../../utils/constants';
 
 export default class GameStatus extends Component {
   constructor(props) {
@@ -31,9 +32,9 @@ export default class GameStatus extends Component {
   }
 
   leaveGame(){
-    const {onViewChanged, socket} = this.props
+    const {changeViewTo, socket} = this.props
     socket.emit('leave_game')
-    onViewChanged()
+    changeViewTo(Views.LOBBY)
   }
 
   teamList(names, icon, score, color) {

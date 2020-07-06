@@ -10,11 +10,11 @@ export default class GameView extends Component {
   }
 
   render() {
-    const {onViewChanged, socket} = this.props
+    const {changeViewTo, socket} = this.props
     return (
       <div className="game">
         <div className="left-panel">
-          <GameStatus onViewChanged={onViewChanged} socket={socket}/>
+          <GameStatus changeViewTo={changeViewTo} socket={socket}/>
         </div>
         <div className="right-panel">
           <GameBoard socket={socket}/>
@@ -25,6 +25,6 @@ export default class GameView extends Component {
 }
 
 GameView.propTypes = {
-  onViewChanged: PropTypes.func,
+  changeViewTo: PropTypes.func,
   socket: PropTypes.any,
 }

@@ -16,10 +16,10 @@ export default class Controller extends Component {
   constructor(props) {
     super(props);
     this.state = {view: Views.LOBBY}
-    this.onViewChanged = this.onViewChanged.bind(this)
+    this.changeViewTo = this.changeViewTo.bind(this)
   }
-  
-  onViewChanged() {
+
+  changeViewTo(newView) {
     const {view} = this.state
     var newView = Views.LOBBY
     if (view == Views.LOBBY){
@@ -32,9 +32,9 @@ export default class Controller extends Component {
     const {view} = this.state;
     switch (view) {
     case Views.LOBBY:
-      return <LobbyView onViewChanged={this.onViewChanged} socket={socket}/>;
+      return <LobbyView changeViewTo={this.changeViewTo} socket={socket}/>;
     case Views.GAME:
-      return  <GameView onViewChanged={this.onViewChanged} socket={socket}/>;
+      return  <GameView changeViewTo={this.changeViewTo} socket={socket}/>;
     default:
       return (
         <div>

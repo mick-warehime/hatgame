@@ -37,7 +37,7 @@ export default class PhraseView extends Component {
   }
 
   render() {
-    const {boardViewChanged} = this.props;
+    const {changeGameViewTo} = this.props;
     const {ready} = this.state;
     const buttonText = !ready ? "Ready!" : "Not Ready"
     const buttonColor = !ready ? "primary" : "secondary"
@@ -84,7 +84,7 @@ export default class PhraseView extends Component {
 
           </Grid>
         </Grid>
-        <Button variant="contained" color={buttonColor} onClick={() => boardViewChanged(Views.SUMMARY)}>
+        <Button variant="contained" color={buttonColor} onClick={() => changeGameViewTo(Views.SUMMARY)}>
               Summary
         </Button>
       </div>
@@ -94,5 +94,5 @@ export default class PhraseView extends Component {
 
 PhraseView.propTypes = {
   socket: PropTypes.any,
-  boardViewChanged: PropTypes.func,
+  changeGameViewTo: PropTypes.func,
 }
