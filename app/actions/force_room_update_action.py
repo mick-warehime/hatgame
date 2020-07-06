@@ -4,7 +4,7 @@ from app.model.rooms import get_room_state
 
 
 # allows client code to force pull new data
-def force_room_update(room_name):
+def force_room_update(room_name: str) -> None:
     room = get_room_state(room_name)
     update_message = {
         "team1": room.team_1_players,

@@ -7,7 +7,7 @@ from flask import render_template
 from flask import session
 from flask_socketio import join_room, leave_room
 
-from app.actions import create_game_action
+from app.actions import create_game_action, randomize_teams_action
 from app.actions import force_room_update_action
 from app.actions import join_game_action
 from app.actions import leave_game_action
@@ -68,7 +68,15 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
     return resp
 
 
-def initialize_session(player_name, room_name):
+@socketio.on(Namespaces.RANDOMIZE_ROOM.value)
+def randomize_room(rand_request: Dict[str, str]) -> Dict[str, Any]:
+    resp = randomize_teams_action.randomize_teams(rand_request)
+    if ERROR not in resp:
+        force_room_update_action.force_room_update(rand_request[ROOM_NAME])
+    return resp
+
+
+def initialize_session(player_name: str, room_name: str) -> None:
     session[ROOM_NAME] = room_name
     session[PLAYER_NAME] = player_name
     join_room(room_name)
