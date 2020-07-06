@@ -6,6 +6,7 @@ ROOM_NAME = 'room'
 PLAYER_NAME = 'player'
 GAME_STATE = 'game_state'
 TEST_GAME = 'asdf'
+PHRASES = 'phrases'
 
 
 # Enumeration of all namespaces used with socketio.
@@ -14,3 +15,4 @@ class Namespaces(Enum):
     JOIN_GAME = 'join_game'
     ROOM_UPDATED = 'room_updated'
     RANDOMIZE_ROOM = 'randomize_room'
+    SUBMIT_PHRASES = 'submit_phrases'

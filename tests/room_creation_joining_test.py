@@ -6,6 +6,7 @@ import pytest
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
 from app.actions.randomize_teams_action import randomize_teams
+from app.model.data_structures import build_player
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state
@@ -24,8 +25,8 @@ def test_room_created():
     assert game_room_exists(TEST_GAME)
 
     room = get_room_state(TEST_GAME)
-    assert 'Mick' in room.team_1_players
-    assert 'Dvir' in room.team_2_players
+    assert build_player('Mick') in room.team_1_players
+    assert build_player('Dvir') in room.team_2_players
 
 
 def test_randomize_room():
@@ -51,7 +52,8 @@ def test_add_valid_game_room_creates_room(setup):
     result = create_game(request)
 
     assert game_room_exists(room_name)
-    assert player in result[GAME_STATE]['team_1_players']
+    team_1_players = result[GAME_STATE]['team_1_players']
+    assert any(p['name'] == player for p in team_1_players)
 
 
 def test_add_already_existing_game_room_gives_error(setup):
@@ -99,8 +101,8 @@ def test_create_then_join_one_player_per_team(setup):
     assert ERROR not in result
 
     room = get_room_state(room_name)
-    assert player in room.team_1_players
-    assert player2 in room.team_2_players
+    assert build_player(player) in room.team_1_players
+    assert build_player(player2) in room.team_2_players
 
 
 def test_join_room_same_player_name(setup):

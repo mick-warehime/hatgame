@@ -1,7 +1,8 @@
 """Implementation of server request/repsonse logic."""
-from dataclasses import replace
+from attr import evolve
 
 from app.model import fields
+from app.model.data_structures import build_player
 from app.model.rooms import (game_room_exists, get_room_state,
                              initialize_game_room, update_room)
 
@@ -22,8 +23,7 @@ def create_test_game() -> None:
 
     # populate room with players
     room = get_room_state(room_name)
-    room = replace(
-        room,
-        **dict(team_1_players=['Mick', 'Liz', 'M\'Lickz'],
-               team_2_players=['Dvir', 'Celeste', 'Boaz', 'Ronen']))
+    team_1 = [build_player(p) for p in ['Mick', 'Liz', 'M\'Lickz']]
+    team_2 = [build_player(p) for p in ['Dvir', 'Celeste', 'Boaz', 'Ronen']]
+    room = evolve(room, **dict(team_1_players=team_1, team_2_players=team_2))
     update_room(room_name, room)
