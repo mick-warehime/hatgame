@@ -15,7 +15,6 @@ def unready_phrases(room_name, player_name) -> Dict[str, Any]:
     # get player from name
     room = get_room_state(room_name)
 
-    player = None
     player_found = False
     for player in room.all_players():
         if player_name == player.name:
@@ -27,11 +26,15 @@ def unready_phrases(room_name, player_name) -> Dict[str, Any]:
 
     # update player as ready, with phrases
     player_with_phrases = build_player(player_name, False, [])
-    if player in room.team_1_players:
-        ind = room.team_1_players.index(player)
+    team_1_names = [p.name for p in room.team_1_players]
+    if player_name in team_1_names:
+        ind = team_1_names.index(player_name)
         room.team_1_players[ind] = player_with_phrases
-    if player in room.team_2_players:
-        ind = room.team_2_players.index(player)
+        return {}
+    team_2_names = [p.name for p in room.team_2_players]
+    if player_name in team_2_names:
+        ind = team_2_names.index(player_name)
         room.team_2_players[ind] = player_with_phrases
+        return {}
 
     return {}
