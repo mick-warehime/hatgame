@@ -6,7 +6,7 @@ import pytest
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
 from app.actions.randomize_teams_action import randomize_teams
-from app.model.data_structures import build_player
+from app.model.player import build_player
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
 from app.model.rooms import clear_rooms, game_room_exists, get_room_state

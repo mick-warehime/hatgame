@@ -2,7 +2,7 @@
 from attr import evolve
 
 from app.model import fields
-from app.model.data_structures import build_player
+from app.model.player import build_player
 from app.model.rooms import (game_room_exists, get_room_state,
                              initialize_game_room, update_room)
 

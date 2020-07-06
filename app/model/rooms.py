@@ -3,7 +3,8 @@ import random
 from typing import Dict, Tuple
 
 from app.icons import ICONS
-from app.model.data_structures import Room, build_player
+from app.model.room import Room
+from app.model.player import build_player
 
 _room_dict: Dict[str, Room] = {}
 
