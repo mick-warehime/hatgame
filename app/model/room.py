@@ -31,6 +31,7 @@ class Room:
     team_2_icon: str
     game_mode: GameModes
     game_round: int
+    clue_giver: Player
 
     def all_players(self) -> Iterable[Player]:
         return chain(self.team_1_players, self.team_2_players)
