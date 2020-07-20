@@ -1,4 +1,4 @@
-from app.model.rooms import remove_player
+from app.model.game_rooms import remove_player
 
 
 def leave_game(player_name, room_name):

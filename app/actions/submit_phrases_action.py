@@ -3,7 +3,7 @@ from typing import Dict, Any
 from app.actions.validation_utils import validate_fields
 from app.model.fields import PHRASES
 from app.model.player import build_player
-from app.model.rooms import get_room_state
+from app.model.game_rooms import get_room_state
 
 
 def submit_phrases(room_name, player_name,

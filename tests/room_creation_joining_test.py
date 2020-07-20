@@ -9,7 +9,7 @@ from app.actions.randomize_teams_action import randomize_teams
 from app.model.player import build_player
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
-from app.model.rooms import clear_rooms, game_room_exists, get_room_state
+from app.model.game_rooms import clear_rooms, game_room_exists, get_room_state
 from app.test_game import create_test_game
 
 

@@ -5,8 +5,8 @@ from attr import asdict
 
 from app.actions.validation_utils import validate_fields
 from app.model import fields
-from app.model.rooms import (game_room_exists, get_room_state,
-                             initialize_game_room)
+from app.model.game_rooms import (game_room_exists, get_room_state,
+                                  initialize_game_room)
 
 
 def create_game(create_request: Dict[str, str]) -> Dict[str, Any]:

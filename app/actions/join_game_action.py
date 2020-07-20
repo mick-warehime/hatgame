@@ -4,7 +4,7 @@ from typing import Dict, Any
 from app.actions.validation_utils import validate_fields
 from app.model import fields
 from app.model.player import build_player
-from app.model.rooms import (game_room_exists, get_room_state, update_room)
+from app.model.game_rooms import (game_room_exists, get_room_state, update_room)
 
 
 def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:

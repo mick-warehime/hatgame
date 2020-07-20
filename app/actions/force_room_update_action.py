@@ -1,6 +1,6 @@
 from flask_socketio import emit
 
-from app.model.rooms import get_room_state
+from app.model.game_rooms import get_room_state
 
 
 # allows client code to force pull new data
