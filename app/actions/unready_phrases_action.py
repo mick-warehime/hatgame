@@ -1,7 +1,7 @@
 from typing import Dict, Any
 
 from app.model.player import build_player
-from app.model.game_rooms import get_room_state
+from app.model.game_rooms import get_room
 
 
 def unready_phrases(room_name, player_name) -> Dict[str, Any]:
@@ -13,7 +13,7 @@ def unready_phrases(room_name, player_name) -> Dict[str, Any]:
     """
 
     # get player from name
-    room = get_room_state(room_name)
+    room = get_room(room_name)
 
     player_found = False
     for player in room.all_players():

@@ -47,7 +47,7 @@ def update_room(room_name: str, data: Room) -> None:
     _room_dict[room_name] = data
 
 
-def get_room_state(room_name: str) -> Room:
+def get_room(room_name: str) -> Room:
     """Get all game state data for a given room."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
     return _room_dict[room_name]
@@ -58,7 +58,7 @@ def remove_player(player_name: str, room_name: str) -> None:
 
     If a player is not in the room this function does nothing.
     """
-    room = get_room_state(room_name)
+    room = get_room(room_name)
     for player in list(room.team_1_players):
         if player.name == player_name:
             room.team_1_players.remove(player)

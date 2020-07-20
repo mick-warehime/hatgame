@@ -9,7 +9,7 @@ from app.actions.randomize_teams_action import randomize_teams
 from app.model.player import build_player
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
-from app.model.game_rooms import clear_rooms, game_room_exists, get_room_state
+from app.model.game_rooms import clear_rooms, game_room_exists, get_room
 from app.test_game import create_test_game
 
 
@@ -24,7 +24,7 @@ def test_room_created():
     create_test_game()
     assert game_room_exists(TEST_GAME)
 
-    room = get_room_state(TEST_GAME)
+    room = get_room(TEST_GAME)
     assert build_player('Mick') in room.team_1_players
     assert build_player('Dvir') in room.team_2_players
 
@@ -32,14 +32,14 @@ def test_room_created():
 def test_randomize_room():
     create_test_game()
 
-    room = get_room_state(TEST_GAME)
+    room = get_room(TEST_GAME)
     team_2 = room.team_2_players
     team_1 = room.team_1_players
     # Using a seed here ensures the teams will change.
     random.seed(11)
     randomize_teams(TEST_GAME)
 
-    room = get_room_state(TEST_GAME)
+    room = get_room(TEST_GAME)
     assert team_2 != room.team_2_players
     assert team_1 != room.team_1_players
 
@@ -100,7 +100,7 @@ def test_create_then_join_one_player_per_team(setup):
     result = join_game({PLAYER_NAME: player2, ROOM_NAME: room_name})
     assert ERROR not in result
 
-    room = get_room_state(room_name)
+    room = get_room(room_name)
     assert build_player(player) in room.team_1_players
     assert build_player(player2) in room.team_2_players
 

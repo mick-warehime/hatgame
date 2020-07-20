@@ -5,7 +5,7 @@ from attr import evolve
 
 from app.actions.validation_utils import validate_fields
 from app.model import fields
-from app.model.game_rooms import game_room_exists, get_room_state, update_room
+from app.model.game_rooms import game_room_exists, get_room, update_room
 
 
 def randomize_teams(room_name: str) -> Dict[str, str]:
@@ -21,7 +21,7 @@ def randomize_teams(room_name: str) -> Dict[str, str]:
     if not game_room_exists(room_name):
         return {fields.ERROR: f'Room named {room_name} does not exist.'}
 
-    room = get_room_state(room_name)
+    room = get_room(room_name)
     players = list(room.team_2_players + room.team_1_players)
     num_players = len(players)
     shuffle(players)

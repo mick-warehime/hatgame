@@ -12,7 +12,7 @@ from app.model.player import Player
 
 
 class GameModes(Enum):
-    """Enumeration of game rounds."""
+    """Enumeration of game modes."""
     LOBBY = 'lobby'
     CLUE_GIVING_PRE = 'clue_giving_pre'
     CLUE_GIVING = 'clue_giving'

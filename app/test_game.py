@@ -3,7 +3,7 @@ from attr import evolve
 
 from app.model import fields
 from app.model.player import build_player
-from app.model.game_rooms import (game_room_exists, get_room_state,
+from app.model.game_rooms import (game_room_exists, get_room,
                                   initialize_game_room, update_room)
 
 
@@ -22,7 +22,7 @@ def create_test_game() -> None:
     initialize_game_room(room_name, 'Mick')
 
     # populate room with players
-    room = get_room_state(room_name)
+    room = get_room(room_name)
     team_1 = [build_player(p) for p in ['Mick', 'Liz', 'M\'Lickz']]
     team_2 = [build_player(p) for p in ['Dvir', 'Celeste', 'Boaz', 'Ronen']]
     room = evolve(room, **dict(team_1_players=team_1, team_2_players=team_2))

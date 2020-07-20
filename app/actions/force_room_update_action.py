@@ -1,6 +1,6 @@
 from flask_socketio import emit
 
-from app.model.game_rooms import get_room_state
+from app.model.game_rooms import get_room
 
 
 # allows client code to force pull new data
@@ -17,7 +17,7 @@ def force_room_update(room_name: str) -> None:
 
 
     """
-    room = get_room_state(room_name)
+    room = get_room(room_name)
     update_message = {
         "team1": [p.name for p in room.team_1_players],
         "team1_ready": [p.ready for p in room.team_1_players],

@@ -4,7 +4,7 @@ from typing import Dict, Any
 from app.actions.validation_utils import validate_fields
 from app.model import fields
 from app.model.player import build_player
-from app.model.game_rooms import (game_room_exists, get_room_state, update_room)
+from app.model.game_rooms import (game_room_exists, get_room, update_room)
 
 
 def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
@@ -39,7 +39,7 @@ def join_game(join_request: Dict[str, str]) -> Dict[str, Any]:
         return {fields.ERROR: f'Room {room_name} does not exist.'}
 
     # Get current teams and check player name not already in use
-    room = get_room_state(room_name)
+    room = get_room(room_name)
 
     player_name = join_request[fields.PLAYER_NAME]
     if any(plyr.name == player_name for plyr in room.all_players()):

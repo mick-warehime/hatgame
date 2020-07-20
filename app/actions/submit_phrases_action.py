@@ -3,7 +3,7 @@ from typing import Dict, Any
 from app.actions.validation_utils import validate_fields
 from app.model.fields import PHRASES
 from app.model.player import build_player
-from app.model.game_rooms import get_room_state
+from app.model.game_rooms import get_room
 
 
 def submit_phrases(room_name, player_name,
@@ -31,7 +31,7 @@ def submit_phrases(room_name, player_name,
         raise ValueError(error)
 
     # get player from name
-    room = get_room_state(room_name)
+    room = get_room(room_name)
 
     player_found = False
     for player in room.all_players():
