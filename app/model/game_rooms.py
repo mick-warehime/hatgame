@@ -3,8 +3,8 @@ import random
 from typing import Dict, Tuple
 
 from app.icons import ICONS
-from app.model.room import Room
 from app.model.player import build_player
+from app.model.room import Room, GameModes
 
 _room_dict: Dict[str, Room] = {}
 
@@ -36,7 +36,8 @@ def initialize_game_room(room_name: str,
         icons = random.sample(ICONS, 2)
 
     _room_dict[room_name] = Room(room_name, [build_player(first_player)], 0,
-                                 icons[0], [], 0, icons[1])
+                                 icons[0], [], 0, icons[1],
+                                 GameModes.LOBBY, 0)
 
 
 def update_room(room_name: str, data: Room) -> None:
