@@ -4,7 +4,7 @@ The implementation is hidden from app.py.
 """
 from enum import Enum
 from itertools import chain
-from typing import List, Iterable
+from typing import List, Iterable, Optional
 
 from attr import dataclass
 
@@ -32,6 +32,7 @@ class Room:
     game_mode: GameModes
     game_round: int
     clue_giver: Player
+    last_clue_giver: Optional[Player]
 
     def all_players(self) -> Iterable[Player]:
         return chain(self.team_1_players, self.team_2_players)

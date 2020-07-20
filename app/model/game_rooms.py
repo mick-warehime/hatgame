@@ -37,7 +37,8 @@ def initialize_game_room(room_name: str,
 
     player = build_player(first_player)
     _room_dict[room_name] = Room(room_name, [player], 0, icons[0], [], 0,
-                                 icons[1], GameModes.LOBBY, 0, player)
+                                 icons[1], GameModes.LOBBY, 0, player,
+                                 last_clue_giver=None)
 
 
 def update_room(room_name: str, data: Room) -> None:
