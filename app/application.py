@@ -7,7 +7,7 @@ from flask import render_template
 from flask import session
 from flask_socketio import join_room, leave_room
 
-from app.actions import create_game_action
+from app.actions import create_game_action, start_game_action
 from app.actions import force_room_update_action
 from app.actions import join_game_action
 from app.actions import leave_game_action
@@ -119,6 +119,13 @@ def leave_game():
     leave_game_action.leave_game(player_name, room_name)
     force_room_update_action.force_room_update(room_name)
     leave_room(room_name)
+
+
+@socketio.on("start_game", namespace='/')
+def start_game(start_request: Dict[str, Any]):
+    room_name = start_request[ROOM_NAME]
+    start_game_action.start_game(room_name)
+    force_room_update_action.force_room_update(room_name)
 
 
 if __name__ == '__main__':
