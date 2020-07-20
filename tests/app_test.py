@@ -1,15 +1,17 @@
-"""Tests of game creation / joining API"""
+"""Tests of app package functionality."""
 import random
 
 import pytest
 
+from app.actions import start_game_action
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
 from app.actions.randomize_teams_action import randomize_teams
-from app.model.player import build_player
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
 from app.model.game_rooms import clear_rooms, game_room_exists, get_room
+from app.model.player import build_player
+from app.model.room import GameModes
 from app.test_game import create_test_game
 
 
@@ -122,3 +124,15 @@ def test_join_room_does_not_exist(setup):
     result = join_game({PLAYER_NAME: 'Mick', ROOM_NAME: 'Nonexistent'})
     assert ERROR in result
     assert 'does not exist' in result[ERROR]
+
+
+def test_start_game():
+    create_test_game()
+    room = get_room(TEST_GAME)
+    assert room.game_round == 0
+    assert room.game_mode == GameModes.LOBBY
+
+    start_game_action.start_game(TEST_GAME)
+    room = get_room(TEST_GAME)
+    assert room.game_round == 1
+    assert room.game_mode == GameModes.CLUE_GIVING_PRE
