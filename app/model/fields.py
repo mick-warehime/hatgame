@@ -16,3 +16,5 @@ class Namespaces(Enum):
     ROOM_UPDATED = 'room_updated'
     RANDOMIZE_ROOM = 'randomize_room'
     SUBMIT_PHRASES = 'submit_phrases'
+    START_GAME = 'start_game'
+    NEXT_CLUE_GIVER = 'next_clue_giver'

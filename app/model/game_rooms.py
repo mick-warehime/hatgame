@@ -3,8 +3,8 @@ import random
 from typing import Dict, Tuple
 
 from app.icons import ICONS
-from app.model.room import Room
 from app.model.player import build_player
+from app.model.room import Room, GameModes
 
 _room_dict: Dict[str, Room] = {}
 
@@ -35,8 +35,16 @@ def initialize_game_room(room_name: str,
     if icons is None:
         icons = random.sample(ICONS, 2)
 
-    _room_dict[room_name] = Room(room_name, [build_player(first_player)], 0,
-                                 icons[0], [], 0, icons[1])
+    player = build_player(first_player)
+    _room_dict[room_name] = Room(room_name, [player],
+                                 0,
+                                 icons[0], [],
+                                 0,
+                                 icons[1],
+                                 GameModes.LOBBY,
+                                 0,
+                                 player,
+                                 last_clue_giver=None)
 
 
 def update_room(room_name: str, data: Room) -> None:
@@ -46,7 +54,7 @@ def update_room(room_name: str, data: Room) -> None:
     _room_dict[room_name] = data
 
 
-def get_room_state(room_name: str) -> Room:
+def get_room(room_name: str) -> Room:
     """Get all game state data for a given room."""
     assert game_room_exists(room_name), f'Room {room_name} does not exist.'
     return _room_dict[room_name]
@@ -57,7 +65,7 @@ def remove_player(player_name: str, room_name: str) -> None:
 
     If a player is not in the room this function does nothing.
     """
-    room = get_room_state(room_name)
+    room = get_room(room_name)
     for player in list(room.team_1_players):
         if player.name == player_name:
             room.team_1_players.remove(player)
