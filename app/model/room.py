@@ -39,3 +39,17 @@ class Room:
 
     def all_phrases(self) -> List[str]:
         return [p for player in self.all_players() for p in player.phrases]
+
+    def update_player(self, name: str, new_player: Player) -> None:
+
+        player_ind = None
+
+        for team in (self.team_1_players, self.team_2_players):
+            for ind, player in enumerate(team):
+                if player.name == name:
+                    player_ind = ind
+                    break
+            if player_ind is not None:
+                team[player_ind] = new_player
+                return
+        assert player_ind is not None, f'Player {name} not found.'
