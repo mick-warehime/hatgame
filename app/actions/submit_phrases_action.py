@@ -2,8 +2,8 @@ from typing import Dict, Any
 
 from app.actions.validation_utils import validate_fields
 from app.model.fields import PHRASES
-from app.model.player import build_player
 from app.model.game_rooms import get_room
+from app.model.player import build_player
 
 
 def submit_phrases(room_name, player_name,
@@ -45,14 +45,4 @@ def submit_phrases(room_name, player_name,
 
     # update player as ready, with phrases
     player_with_phrases = build_player(player_name, True, phrases)
-    team_1_names = [p.name for p in room.team_1_players]
-    if player_name in team_1_names:
-        ind = team_1_names.index(player_name)
-        room.team_1_players[ind] = player_with_phrases
-        return {}
-    team_2_names = [p.name for p in room.team_2_players]
-    if player_name in team_2_names:
-        ind = team_2_names.index(player_name)
-        room.team_2_players[ind] = player_with_phrases
-        return {}
-    raise ValueError(f'Player should be in team but is not: {player_name}')
+    room.update_player(player_name, player_with_phrases)
