@@ -42,5 +42,6 @@ def next_clue_giver(room_name: str) -> {}:
             ind = team.index(prev_giver)
             next_giver = team[(ind + 1) % len(team)]
 
-    update_room(room.name, evolve(room, last_clue_giver=room.clue_giver,
-                                  clue_giver=next_giver))
+    update_room(
+        room.name,
+        evolve(room, last_clue_giver=room.clue_giver, clue_giver=next_giver))
