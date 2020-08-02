@@ -122,7 +122,7 @@ def leave_game():
     leave_room(room_name)
 
 
-@socketio.on("start_game", namespace='/')
+@socketio.on(Namespaces.START_GAME.value, namespace='/')
 def start_game(start_request: Dict[str, Any]):
     room_name = start_request[ROOM_NAME]
     start_game_action.start_game(room_name)
