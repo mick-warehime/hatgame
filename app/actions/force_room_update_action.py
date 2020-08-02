@@ -27,6 +27,8 @@ def force_room_update(room_name: str) -> None:
         "team2_ready": [p.ready for p in room.team_2_players],
         "icon2": room.team_2_icon,
         "score2": room.team_2_score,
-        "phrases": room.all_phrases()
+        "phrases": room.all_phrases(),
+        "clue_giver": room.clue_giver,
+        "last_clue_giver": room.last_clue_giver
     }
     emit('update_room', update_message, room=room_name)
