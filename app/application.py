@@ -7,7 +7,8 @@ from flask import render_template
 from flask import session
 from flask_socketio import join_room, leave_room
 
-from app.actions import create_game_action, start_game_action
+from app.actions import create_game_action, start_game_action, \
+    next_clue_giver_action
 from app.actions import force_room_update_action
 from app.actions import join_game_action
 from app.actions import leave_game_action
@@ -125,6 +126,15 @@ def leave_game():
 def start_game(start_request: Dict[str, Any]):
     room_name = start_request[ROOM_NAME]
     start_game_action.start_game(room_name)
+    force_room_update_action.force_room_update(room_name)
+
+
+@socketio.on(Namespaces.NEXT_CLUE_GIVER.value, namespace='/')
+def next_clue_giver(next_request: Dict[str, Any]) -> None:
+    # update the next player
+    room_name = next_request[ROOM_NAME]
+    next_clue_giver_action.next_clue_giver(room_name)
+    # send information to all clients
     force_room_update_action.force_room_update(room_name)
 
 
