@@ -22,7 +22,7 @@ def start_game(room_name: str) -> Dict[str, Any]:
     assert room.game_mode == GameModes.LOBBY
     assert room.game_round == 0
 
-    new_room = evolve(room, game_mode=GameModes.CLUE_GIVING_PRE, game_round=1)
+    new_room = evolve(room, game_mode=GameModes.TURN_RECAP, game_round=1)
     update_room(room_name, new_room)
 
     return {}

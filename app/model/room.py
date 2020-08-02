@@ -14,10 +14,10 @@ from app.model.player import Player
 class GameModes(Enum):
     """Enumeration of game modes."""
     LOBBY = 'lobby'
-    CLUE_GIVING_PRE = 'clue_giving_pre'
     CLUE_GIVING = 'clue_giving'
     TURN_RECAP = 'turn_recap'
     ROUND_RECAP = 'round_recap'
+    GAME_RECAP = 'game_recap'
 
 
 @dataclass

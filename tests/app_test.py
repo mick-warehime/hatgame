@@ -135,4 +135,4 @@ def test_start_game():
     start_game_action.start_game(TEST_GAME)
     room = get_room(TEST_GAME)
     assert room.game_round == 1
-    assert room.game_mode == GameModes.CLUE_GIVING_PRE
+    assert room.game_mode == GameModes.TURN_RECAP
