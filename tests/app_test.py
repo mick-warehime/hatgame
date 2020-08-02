@@ -8,6 +8,7 @@ from app.actions import start_game_action
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
 from app.actions.next_clue_giver_action import next_clue_giver
+from app.actions.next_mode_action import next_mode
 from app.actions.randomize_teams_action import randomize_teams
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
@@ -184,3 +185,19 @@ def test_next_clue_giver_other_team_missing():
     room = get_room(TEST_GAME)
     assert room.clue_giver == room.team_1_players[1]
     assert room.last_clue_giver == giver
+
+
+def test_next_mode_typical_case():
+    clear_rooms()
+    create_test_game()
+    start_game_action.start_game(TEST_GAME)  # go to turn recap
+    room = get_room(TEST_GAME)
+
+    assert room.game_mode == GameModes.TURN_RECAP
+    next_mode(room.name)
+    room = get_room(TEST_GAME)
+    assert room.game_mode == GameModes.CLUE_GIVING
+
+    next_mode(room.name)
+    room = get_room(TEST_GAME)
+    assert room.game_mode == GameModes.TURN_RECAP
