@@ -140,6 +140,7 @@ def test_start_game():
 
 
 def test_next_clue_giver_typical_case():
+    clear_rooms()
     create_test_game()
     start_game_action.start_game(TEST_GAME)
     room = get_room(TEST_GAME)
@@ -152,4 +153,11 @@ def test_next_clue_giver_typical_case():
 
     room = get_room(TEST_GAME)
     assert room.clue_giver == room.team_2_players[0]
+    assert room.last_clue_giver == giver
+    giver = room.clue_giver
+
+    next_clue_giver(room.name)
+
+    room = get_room(TEST_GAME)
+    assert room.clue_giver == room.team_1_players[1]
     assert room.last_clue_giver == giver
