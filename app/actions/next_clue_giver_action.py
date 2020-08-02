@@ -40,7 +40,7 @@ def next_clue_giver(room_name: str) -> {}:
 
         if prev_giver in team:
             ind = team.index(prev_giver)
-            next_giver = team[ind + 1 % len(team)]
+            next_giver = team[(ind + 1) % len(team)]
 
     update_room(room.name, evolve(room, last_clue_giver=room.clue_giver,
                                   clue_giver=next_giver))

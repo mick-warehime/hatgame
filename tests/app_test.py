@@ -6,6 +6,7 @@ import pytest
 from app.actions import start_game_action
 from app.actions.create_game_action import create_game
 from app.actions.join_game_action import join_game
+from app.actions.next_clue_giver_action import next_clue_giver
 from app.actions.randomize_teams_action import randomize_teams
 from app.model.fields import (PLAYER_NAME, ROOM_NAME, GAME_STATE,
                               TEST_GAME, ERROR)
@@ -136,3 +137,19 @@ def test_start_game():
     room = get_room(TEST_GAME)
     assert room.game_round == 1
     assert room.game_mode == GameModes.TURN_RECAP
+
+
+def test_next_clue_giver_typical_case():
+    create_test_game()
+    start_game_action.start_game(TEST_GAME)
+    room = get_room(TEST_GAME)
+
+    assert room.clue_giver == room.team_1_players[0]
+    assert room.last_clue_giver is None
+    giver = room.clue_giver
+
+    next_clue_giver(room.name)
+
+    room = get_room(TEST_GAME)
+    assert room.clue_giver == room.team_2_players[0]
+    assert room.last_clue_giver == giver
