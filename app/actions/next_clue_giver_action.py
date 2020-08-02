@@ -25,10 +25,10 @@ def next_clue_giver(room_name: str) -> {}:
     if prev_giver is None:
         if room.clue_giver in teams[0]:
             other_team = teams[1]
-        else:
-            assert room.clue_giver in teams[1], (f'Clue giver {room.clue_giver}'
-                                                 f' missing.')
+        elif room.clue_giver in teams[1]:
             other_team = teams[0]
+        else:
+            other_team = []
 
         if not other_team:  # switch to next player on current player's team
             prev_giver = room.clue_giver
