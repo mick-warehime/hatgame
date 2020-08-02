@@ -28,6 +28,8 @@ def force_room_update(room_name: str) -> None:
         "icon2": room.team_2_icon,
         "score2": room.team_2_score,
         "phrases": room.all_phrases(),
+        "game_mode": room.game_mode,
+        "game_round": room.game_round,
         "clue_giver": room.clue_giver,
         "last_clue_giver": room.last_clue_giver
     }
