@@ -1,7 +1,7 @@
 from flask_socketio import emit
 
 from app.model.game_rooms import get_room
-
+from app.model.room import convert_room_to_json
 
 # allows client code to force pull new data
 def force_room_update(room_name: str) -> None:
@@ -18,19 +18,5 @@ def force_room_update(room_name: str) -> None:
 
     """
     room = get_room(room_name)
-    update_message = {
-        "team1": [p.name for p in room.team_1_players],
-        "team1_ready": [p.ready for p in room.team_1_players],
-        "icon1": room.team_1_icon,
-        "score1": room.team_1_score,
-        "team2": [p.name for p in room.team_2_players],
-        "team2_ready": [p.ready for p in room.team_2_players],
-        "icon2": room.team_2_icon,
-        "score2": room.team_2_score,
-        "phrases": room.all_phrases(),
-        "game_mode": room.game_mode,
-        "game_round": room.game_round,
-        "clue_giver": room.clue_giver,
-        "last_clue_giver": room.last_clue_giver
-    }
-    emit('update_room', update_message, room=room_name)
+
+    emit('update_room', convert_room_to_json(room), room=room_name)

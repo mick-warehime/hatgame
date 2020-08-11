@@ -49,4 +49,4 @@ def create_game(create_request: Dict[str, str]) -> Dict[str, Any]:
         }
 
     initialize_game_room(room_name, create_request[fields.PLAYER_NAME])
-    return {fields.GAME_STATE: asdict(get_room(room_name))}
+    return {}

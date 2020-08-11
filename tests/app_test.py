@@ -1,7 +1,8 @@
 """Tests of app package functionality."""
+import json
+import pytest
 import random
 
-import pytest
 from attr import evolve
 
 from app.actions import start_game_action
@@ -16,6 +17,7 @@ from app.model.game_rooms import clear_rooms, game_room_exists, get_room, \
     update_room
 from app.model.player import build_player
 from app.model.room import GameModes
+from app.model.room import convert_room_to_json
 from app.test_game import create_test_game
 
 
@@ -55,11 +57,9 @@ def test_add_valid_game_room_creates_room(setup):
     player = 'Mick'
     request = {PLAYER_NAME: player, ROOM_NAME: room_name}
 
-    result = create_game(request)
+    create_game(request)
 
     assert game_room_exists(room_name)
-    team_1_players = result[GAME_STATE]['team_1_players']
-    assert any(p['name'] == player for p in team_1_players)
 
 
 def test_add_already_existing_game_room_gives_error(setup):
@@ -201,3 +201,11 @@ def test_next_mode_typical_case():
     next_mode(room.name)
     room = get_room(TEST_GAME)
     assert room.game_mode == GameModes.TURN_RECAP
+
+def test_room_can_be_jsonified():
+    create_test_game()
+    room = get_room(TEST_GAME)
+    jsonified_room = convert_room_to_json(room)
+    data = json.dumps(jsonified_room)
+
+    assert data

@@ -53,3 +53,26 @@ class Room:
                 team[player_ind] = new_player
                 return
         assert player_ind is not None, f'Player {name} not found.'
+
+
+def convert_room_to_json(room):
+    return {
+        "team1": [p.name for p in room.team_1_players],
+        "team1_ready": [p.ready for p in room.team_1_players],
+        "icon1": room.team_1_icon,
+        "score1": room.team_1_score,
+        "team2": [p.name for p in room.team_2_players],
+        "team2_ready": [p.ready for p in room.team_2_players],
+        "icon2": room.team_2_icon,
+        "score2": room.team_2_score,
+        "phrases": room.all_phrases(),
+        "game_mode": room.game_mode.value,
+        "game_round": room.game_round,
+        "clue_giver": _get_player_name(room.clue_giver),
+        "last_clue_giver": _get_player_name(room.last_clue_giver)
+    }
+
+def _get_player_name(player):
+    if not player:
+        return ''
+    return player.name
