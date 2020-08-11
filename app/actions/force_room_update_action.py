@@ -3,6 +3,7 @@ from flask_socketio import emit
 from app.model.game_rooms import get_room
 from app.model.room import convert_room_to_json
 
+
 # allows client code to force pull new data
 def force_room_update(room_name: str) -> None:
     """Update clients with new room information.
